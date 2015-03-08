@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+// Import Bluetooth libraries
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+
 
 public class MainActivity extends ActionBarActivity {
 
