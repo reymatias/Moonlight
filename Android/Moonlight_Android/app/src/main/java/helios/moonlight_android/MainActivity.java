@@ -4,13 +4,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-// Import Bluetooth libraries
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
+import android.app.ListActivity; // List activities
+import android.bluetooth.BluetoothAdapter; // Bluetooth adapter
+import android.bluetooth.BluetoothDevice; // Bluetooth Device
+import android.content.Intent; // Intent library
 
 
 public class MainActivity extends ActionBarActivity {
+
+    // Variables used for Bluetooth connectivity
+    private BluetoothAdapter btadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
