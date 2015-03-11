@@ -24,7 +24,7 @@ String inText;
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("ArduDroid 0.12 Alpha by TechBitar (2013)");
+  Serial.println("Moonlight 2015");
   Serial.flush();
 }
 
@@ -99,71 +99,16 @@ void loop()
 // 2a) select the requested pin# for DigitalWrite action
 void set_digitalwrite(int pin_num, int pin_value)
 {
-  switch (pin_num) {
-  case 13:
-    pinMode(13, OUTPUT);
-    digitalWrite(13, pin_value);  
-    // add your code here      
-    break;
-  case 12:
-    pinMode(12, OUTPUT);
-    digitalWrite(12, pin_value);   
-    // add your code here       
-    break;
-  case 11:
-    pinMode(11, OUTPUT);
-    digitalWrite(11, pin_value);         
-    // add your code here 
-    break;
-  case 10:
-    pinMode(10, OUTPUT);
-    digitalWrite(10, pin_value);         
-    // add your code here 
-    break;
-  case 9:
-    pinMode(9, OUTPUT);
-    digitalWrite(9, pin_value);         
-    // add your code here 
-    break;
-  case 8:
-    pinMode(8, OUTPUT);
-    digitalWrite(8, pin_value);         
-    // add your code here 
-    break;
-  case 7:
-    pinMode(7, OUTPUT);
-    digitalWrite(7, pin_value);         
-    // add your code here 
-    break;
-  case 6:
-    pinMode(6, OUTPUT);
-    digitalWrite(6, pin_value);         
-    // add your code here 
-    break;
-  case 5:
-    pinMode(5, OUTPUT);
-    digitalWrite(5, pin_value); 
-    // add your code here       
-    break;
-  case 4:
-    pinMode(4, OUTPUT);
-    digitalWrite(4, pin_value);         
-    // add your code here 
-    break;
-  case 3:
-    pinMode(3, OUTPUT);
-    digitalWrite(3, pin_value);         
-    // add your code here 
-    break;
-  case 2:
-    pinMode(2, OUTPUT);
-    digitalWrite(2, pin_value); 
-    // add your code here       
-    break;      
-    // default: 
-    // if nothing else matches, do the default
-    // default is optional
-  } 
+    int counter = 0;
+    while(counter != 5){
+    pinMode(pin_num, OUTPUT);
+    digitalWrite(pin_num, HIGH);
+    delay(1000);
+    digitalWrite(pin_num, LOW);
+    delay(1000);
+    counter++;
+    }
+    digitalWrite(pin_num, LOW);
+    delay(1000);    
 }
-
 
