@@ -6,6 +6,13 @@
  LICENSE: Public domain
 */
 
+/*
+ Hexadecimal values for control for Arduino provided by sponsors
+ 
+ ON: Ox6f6e
+ OFF: 0x6f6666
+*/
+
 #define START_CMD_CHAR '*'
 #define END_CMD_CHAR '#'
 #define DIV_CMD_CHAR '|'
