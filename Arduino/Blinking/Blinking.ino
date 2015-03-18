@@ -1,39 +1,9 @@
 /*
-SparkFun Inventor's Kit
-Example sketch 03
-
-RGB LED
-
-  Make an RGB LED display a rainbow of colors!
-  
-Hardware connections:
-
-  An RGB LED is actually three LEDs (red, green, and blue) in
-  one package. When you run them at different brightnesses,
-  the red, green and blue mix to form new colors.
-  
-  Starting at the flattened edge of the flange on the LED,
-  the pins are ordered RED, COMMON, GREEN, BLUE.
-  
-  Connect RED to a 330 Ohm resistor. Connect the other end
-  of the resistor to Arduino digital pin 9.
-
-  Connect COMMON pin to GND.
-
-  Connect GREEN to a 330 Ohm resistor. Connect the other end
-  of the resistor to Arduino digital pin 10.
-
-  Connect BLUE to a 330 Ohm resistor. Connect the other end
-  of the resistor to Arduino digital pin 11.
-
-This sketch was written by SparkFun Electronics,
-with lots of help from the Arduino community.
-Visit http://learn.sparkfun.com/products/2 for SIK information.
-Visit http://www.arduino.cc to learn about the Arduino.
-
-Version 2.0 6/2012 MDG
-*/
-
+reference
+ http://www1.cpshs.hcc.edu.tw/cparduino/Arduino%20examples%20V2/ReadASCIIString.htm
+ http://forum.arduino.cc/index.php?topic=22413.0
+ */
+//changing this code to reflect anode instead of cathode as in before
 
 // First we'll define the pins by name to make the sketch
 // easier to follow.
@@ -44,13 +14,12 @@ Version 2.0 6/2012 MDG
 // Arduino will give you a friendly warning if you accidentally
 // try to change the value, so it's considered good form.)
 
-const int RED_PIN = 9;
+const int RED_PIN = 11;
 const int GREEN_PIN = 10;
-const int BLUE_PIN = 11;
+const int BLUE_PIN = 9;
 
 // This variable controls how fast we loop through the colors.
 // (Try changing this to make the fading faster or slower.)
-
 int DISPLAY_TIME = 100;  // In milliseconds
 
 
@@ -62,139 +31,97 @@ void setup()
   pinMode(RED_PIN, OUTPUT);
   pinMode(GREEN_PIN, OUTPUT);
   pinMode(BLUE_PIN, OUTPUT);
+  Serial.begin(9600);
+  while (!Serial) // Wait untilSerial is ready - Leonardo
+    Serial.println("Enter 0 or 1 for regular operation, else it's in lost mode!");
 }
 
 
 void loop()
 {
+  /*
+  char mode = '2';
   // In this sketch, we'll start writing our own functions.
   // This makes the sketch easier to follow by dividing up
   // the sketch into sections, and not having everything in
   // setup() or loop().
-
-  // We'll show you two ways to run the RGB LED.
-
-  // The first way is to turn the individual LEDs (red, blue,
-  // and green) on and off in various combinations. This gives you
-  // a total of eight colors (if you count "black" as a color).
-	
-  // We've written a function called mainColors() that steps
-  // through all eight of these colors. We're only "calling" the
-  // function here (telling it to run). The actual function code
-  // is further down in the sketch.
-
-  mainColors();
+  if (Serial.available())
+  {
+    mode = Serial.read();
+    if (mode == '0')
+      normalPattern();
+    else if (mode == '1')
+      blinkingPattern();
+    else
+      stolenPattern();
+  }
+  */
+      //normalPattern();
+      //blinkingPattern();
+      stolenPattern();
   
-  // The above function turns the individual LEDs full-on and
-  // full-off. If you want to generate more than eight colors,
-  // you can do so by varying the brightness of the individual
-  // LEDs between full-on and full-off.
-  
-  // The analogWrite() function lets us do this. This function
-  // lets you dim a LED from full-off to full-on over 255 steps.
-  
-  // We've written a function called showSpectrum() that smoothly
-  // steps through all the colors. Again we're just calling it
-  // here; the actual code is further down in this sketch.
-
-  //showSpectrum();
 }
 
-
-// Here's the mainColors() function we've written.
-
-// This function displays the eight "main" colors that the RGB LED
-// can produce. If you'd like to use one of these colors in your 
-// own sketch, you cancopy and paste that section into your code.
-
-void mainColors()
+void normalPattern()
 {
+
+  digitalWrite(RED_PIN, HIGH);
+  digitalWrite(GREEN_PIN, HIGH);
+  digitalWrite(BLUE_PIN, LOW);
+
+  delay(DISPLAY_TIME);
+
+}
+
+void blinkingPattern()
+{
+
+  digitalWrite(RED_PIN, LOW);
+  digitalWrite(GREEN_PIN, HIGH);
+  digitalWrite(BLUE_PIN, LOW);
+
+  delay(DISPLAY_TIME);
+
   // Off (all LEDs off):
+  digitalWrite(RED_PIN, HIGH);
+  digitalWrite(GREEN_PIN, HIGH);
+  digitalWrite(BLUE_PIN, HIGH);
+
+  delay(DISPLAY_TIME);
+}
+
+void stolenPattern()
+{
+
   int check = 0;
-  
+
+  //total time in while loop
+  //10*DISPLAY_TIME*2
   while (check < 10){
-  digitalWrite(RED_PIN, HIGH);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, HIGH);
+    // Red (turn just the red LED on):
+    digitalWrite(RED_PIN, LOW);
+    digitalWrite(GREEN_PIN, HIGH);
+    digitalWrite(BLUE_PIN, HIGH);
 
-  delay(DISPLAY_TIME);
+    delay(DISPLAY_TIME);
 
-  // Red (turn just the red LED on):
-
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, HIGH);
-
-  delay(DISPLAY_TIME);
-  
-  check++;
-  }
-  
-  
     // Off (all LEDs off):
+    digitalWrite(RED_PIN, HIGH);
+    digitalWrite(GREEN_PIN, HIGH);
+    digitalWrite(BLUE_PIN, HIGH);
 
+    delay(DISPLAY_TIME);
+
+    check++;
+  }
+
+  // Off (all LEDs off):
   digitalWrite(RED_PIN, HIGH);
   digitalWrite(GREEN_PIN, HIGH);
   digitalWrite(BLUE_PIN, HIGH);
 
+  //turn off blinking for 4 seconds
   delay(4000);
-
-  // Red (turn just the red LED on):
-
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, HIGH);
-
-  delay(DISPLAY_TIME);
-/*
-  // Green (turn just the green LED on):
-
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, LOW);
-
-  delay(1000);
-
-  // Blue (turn just the blue LED on):
-
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(GREEN_PIN, LOW);
-  digitalWrite(BLUE_PIN, HIGH);
-
-  delay(1000);
-
-  // Yellow (turn red and green on):
-
-  digitalWrite(RED_PIN, HIGH);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, LOW);
-
-  delay(1000);
-
-  // Cyan (turn green and blue on):
-
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, HIGH);
-
-  delay(1000);
-
-  // Purple (turn red and blue on):
-
-  digitalWrite(RED_PIN, HIGH);
-  digitalWrite(GREEN_PIN, LOW);
-  digitalWrite(BLUE_PIN, HIGH);
-
-  delay(1000);
-
-  // White (turn all the LEDs on):
-
-  digitalWrite(RED_PIN, HIGH);
-  digitalWrite(GREEN_PIN, HIGH);
-  digitalWrite(BLUE_PIN, HIGH);
-
-  delay(1000);
-  */
 }
 
 
@@ -257,7 +184,7 @@ void mainColors()
 void showSpectrum()
 {
   int x;  // define an integer variable called "x"
-  
+
   // Now we'll use a for() loop to make x count from 0 to 767
   // (Note that there's no semicolon after this line!
   // That's because the for() loop will repeat the next
@@ -266,7 +193,7 @@ void showSpectrum()
 
   for (x = 0; x < 768; x++)
 
-  // Each time we loop (with a new value of x), do the following:
+    // Each time we loop (with a new value of x), do the following:
 
   {
     showRGB(x);  // Call RGBspectrum() with our new x
@@ -338,3 +265,10 @@ void showRGB(int color)
   analogWrite(BLUE_PIN, blueIntensity);
   analogWrite(GREEN_PIN, greenIntensity);
 }
+
+
+
+
+
+
+
