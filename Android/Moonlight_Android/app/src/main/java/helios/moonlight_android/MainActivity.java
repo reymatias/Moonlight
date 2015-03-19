@@ -1,31 +1,16 @@
 package helios.moonlight_android;
 
-import java.util.Set; // Utilize 'Set'
-
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.app.ListActivity; // 'List activities'
-import android.content.Intent; // 'Intent' library
 import android.view.Menu;
 import android.view.MenuItem;
-import android.bluetooth.BluetoothAdapter; // Bluetooth adapter
-import android.bluetooth.BluetoothDevice; // Bluetooth device
-import android.bluetooth.BluetoothManager; // Bluetooth manager
 
 public class MainActivity extends ActionBarActivity {
-    // Viewed the following tutorial on using Bluetooth on an Android app
-    // TutorialsPoint: http://www.tutorialspoint.com/android/android_bluetooth.htm
-
-    // Variables used for Bluetooth connectivity
-    private BluetoothAdapter btadapter;
-    private Set<BluetoothDevice> pairedDevice;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
