@@ -71,7 +71,7 @@ void loop() {
       Serial.print(message);
       message.toLowerCase();
     
-        if((message == "on"))
+        if((message == "on" ))
         {
           // turn the LED on
            analogWrite(led, 255);
@@ -83,6 +83,16 @@ void loop() {
           // turn the LED off
           analogWrite(led, 0);
           analogWrite(led2, 0);
+        } 
+        else if((message == "b"))
+        {
+          // turn the LED off
+          analogWrite(led, 255);
+          analogWrite(led2, 255); 
+          delay(100);
+          analogWrite(led, 0);
+          analogWrite(led2, 0);
+          delay(100);
         } 
     }
   } 
