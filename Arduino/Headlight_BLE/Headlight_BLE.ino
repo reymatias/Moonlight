@@ -68,25 +68,26 @@ void loop() {
   else{
     if(message != "" && message != " " && message != 0)
     {
-      Serial.print(message);
+      Serial.println(message);
       message.toLowerCase();
     
-        if((message == "on" ))
+        if((message == "on" || message == "o"))
         {
-          // turn the LED on
+          // TURN HEADLIGHT ON
            analogWrite(led, 255);
            analogWrite(led2, 255); 
         }
         // TURN HEADLIGHT OFF
-        else if((message == "off"))
+        else if((message == "off"|| message == "f"))
         {
           // turn the LED off
           analogWrite(led, 0);
           analogWrite(led2, 0);
         } 
+        // Blinking Mode
         else if((message == "b"))
         {
-          // turn the LED off
+          // turn the LED on and off
           analogWrite(led, 255);
           analogWrite(led2, 255); 
           delay(100);
