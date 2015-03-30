@@ -95,6 +95,35 @@ void loop() {
           analogWrite(led2, 0);
           delay(100);
         } 
+        // Lost Mode
+        else if((message == "l"))
+        {
+          // turn the LED on and off
+          analogWrite(led, 255);
+          analogWrite(led2, 255); 
+          delay(2000);
+          analogWrite(led, 0);
+          analogWrite(led2, 0);
+          delay(100);
+          analogWrite(led, 255);
+          analogWrite(led2, 255); 
+          delay(100);
+          analogWrite(led, 0);
+          analogWrite(led2, 0);
+          delay(100);
+          analogWrite(led, 255);
+          analogWrite(led2, 255); 
+          delay(100);
+          analogWrite(led, 0);
+          analogWrite(led2, 0);
+          delay(100);
+          analogWrite(led, 255);
+          analogWrite(led2, 255); 
+          delay(100);
+          analogWrite(led, 0);
+          analogWrite(led2, 0);
+          delay(100);
+        }         
     }
   } 
 }
