@@ -20,15 +20,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-<<<<<<< HEAD
         android:theme="@style/Theme.AppCompat" >
         //need checking
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-=======
-        android:theme="@style/AppTheme" >
->>>>>>> 22512c42181c1a99cf872b9c1453e5b256d8a77e
 
         //Luis: All activities must be declared in manifest
         <activity
