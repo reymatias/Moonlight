@@ -27,7 +27,8 @@ public class LoginActivity extends Activity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+        Intent intent = getIntent();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -55,7 +56,7 @@ public class LoginActivity extends Activity implements
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_button && !mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
-            mGoogleApiClient.connect();
+            mGoogleApiClient.connect();//very important
         }
     }
 
