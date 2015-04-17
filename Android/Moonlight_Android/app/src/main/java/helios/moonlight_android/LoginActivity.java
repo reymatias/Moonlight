@@ -94,7 +94,7 @@ public class LoginActivity extends Activity implements
 
     public void onConnected(Bundle connectionHint) {
         mSignInClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Signed in!", Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -10,44 +10,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
+        android:layout_alignTop="@+id/imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="61dp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/sign_in_button"
+        android:layout_marginBottom="49dp"/>
+
     <!--this is how you comment-->
     <!--user clicks the button onClick='name of a method in activity'-->
 
 
-    <SeekBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Brightness"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disconnect"
-        android:id="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textView" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Moonlight"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
