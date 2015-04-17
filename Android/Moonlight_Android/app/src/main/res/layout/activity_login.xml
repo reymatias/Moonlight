@@ -10,4 +10,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="121dp" />
 
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_out_button_name"
+        android:enabled="true"
+        android:layout_alignTop="@+id/sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:id="@+id/sign_in_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status_signed_out"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+
 </RelativeLayout>
+
