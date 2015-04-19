@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, LoginTwoActivity.class);
         startActivity(intent);
     }
 
