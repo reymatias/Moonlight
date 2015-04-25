@@ -50,6 +50,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class LoginTwoActivity extends FragmentActivity implements
         ConnectionCallbacks, OnConnectionFailedListener,
         ResultCallback<LoadPeopleResult>, View.OnClickListener{
@@ -130,6 +133,8 @@ public class LoginTwoActivity extends FragmentActivity implements
     private ArrayAdapter<String> mCirclesAdapter;
     private ArrayList<String> mCirclesList;
 
+    @InjectView(R.id.mapButton) Button mMapButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,11 +145,13 @@ public class LoginTwoActivity extends FragmentActivity implements
         mRevokeButton = (Button) findViewById(R.id.revoke_access_button);
         mStatus = (TextView) findViewById(R.id.sign_in_status);
         mCirclesListView = (ListView) findViewById(R.id.circles_list);
+        ButterKnife.inject(this);
 
         // Button listeners
         mSignInButton.setOnClickListener(this);
         mSignOutButton.setOnClickListener(this);
         mRevokeButton.setOnClickListener(this);
+        mMapButton.setOnClickListener(this);
 
         // CheckBox listeners
         //((CheckBox) findViewById(R.id.request_auth_code_checkbox)).setOnCheckedChangeListener(this);
@@ -237,6 +244,10 @@ public class LoginTwoActivity extends FragmentActivity implements
                     mGoogleApiClient = buildGoogleApiClient();
                     mGoogleApiClient.connect();
                     break;
+                case R.id.mapButton:
+                    //Display the map with the current location and bikes lost nearby
+                    Intent intent = new Intent(this,MapsActivity.class);
+                    startActivity(intent);
             }
         }
     }
@@ -276,6 +287,7 @@ public class LoginTwoActivity extends FragmentActivity implements
         mSignInButton.setEnabled(false);
         mSignOutButton.setEnabled(true);
         mRevokeButton.setEnabled(true);
+        mMapButton.setEnabled(true);
 
         // Hide the sign-in options, they no longer apply
         //findViewById(R.id.layout_server_auth).setVisibility(View.GONE);
@@ -426,6 +438,7 @@ public class LoginTwoActivity extends FragmentActivity implements
         mSignInButton.setEnabled(true);
         mSignOutButton.setEnabled(false);
         mRevokeButton.setEnabled(false);
+        mMapButton.setEnabled(false);
 
         // Show the sign-in options
         //findViewById(R.id.layout_server_auth).setVisibility(View.VISIBLE);

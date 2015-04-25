@@ -25,16 +25,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_out_button_name"
-            android:enabled="false" />
+            android:enabled="false"
+            android:background="@android:color/background_dark"
+            android:layout_marginLeft="5dp" />
 
         <Button
             android:id="@+id/revoke_access_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/revoke_access_button_name"
-            android:enabled="false" />
+            android:enabled="false"
+            android:background="@android:color/background_dark"
+            android:layout_marginLeft="7dp" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Map"
+        android:id="@+id/mapButton"
+        android:layout_gravity="center_horizontal"
+        android:enabled="false"
+        android:background="@android:drawable/dialog_frame" />
 
     <TextView
         android:id="@+id/sign_in_status"
