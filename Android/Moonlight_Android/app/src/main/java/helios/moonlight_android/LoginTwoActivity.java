@@ -50,12 +50,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class LoginTwoActivity extends FragmentActivity implements
         ConnectionCallbacks, OnConnectionFailedListener,
-        ResultCallback<LoadPeopleResult>, View.OnClickListener{
+        ResultCallback<LoadPeopleResult>, View.OnClickListener {
 
     private static final String TAG = "android-plus-quickstart";//used for logging
 
@@ -125,27 +131,40 @@ public class LoginTwoActivity extends FragmentActivity implements
     // so there would be nowhere to send the code.
     //private boolean mServerHasToken = true;
 
-    private SignInButton mSignInButton;
-    private Button mSignOutButton;
-    private Button mRevokeButton;
-    private TextView mStatus;
-    private ListView mCirclesListView;
+    //private SignInButton mSignInButton;
+    //private Button mSignOutButton;
+    //private Button mRevokeButton;
+    //private TextView mStatus;
+    //private ListView mCirclesListView;
     private ArrayAdapter<String> mCirclesAdapter;
     private ArrayList<String> mCirclesList;
 
-    @InjectView(R.id.mapButton) Button mMapButton;
+    @InjectView(R.id.mapButton)
+    Button mMapButton;
+    @InjectView(R.id.sign_in_button)
+    SignInButton mSignInButton;
+    @InjectView(R.id.sign_out_button)
+    Button mSignOutButton;
+    @InjectView(R.id.revoke_access_button)
+    Button mRevokeButton;
+    @InjectView(R.id.sign_in_status)
+    TextView mStatus;
+    @InjectView(R.id.circles_list)
+    ListView mCirclesListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logintwo);
 
-        mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        mSignOutButton = (Button) findViewById(R.id.sign_out_button);
-        mRevokeButton = (Button) findViewById(R.id.revoke_access_button);
-        mStatus = (TextView) findViewById(R.id.sign_in_status);
-        mCirclesListView = (ListView) findViewById(R.id.circles_list);
+        //mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        //mSignOutButton = (Button) findViewById(R.id.sign_out_button);
+        //mRevokeButton = (Button) findViewById(R.id.revoke_access_button);
+        //mStatus = (TextView) findViewById(R.id.sign_in_status);
+        //mCirclesListView = (ListView) findViewById(R.id.circles_list);
+
         ButterKnife.inject(this);
+        //OK!
 
         // Button listeners
         mSignInButton.setOnClickListener(this);
@@ -246,7 +265,7 @@ public class LoginTwoActivity extends FragmentActivity implements
                     break;
                 case R.id.mapButton:
                     //Display the map with the current location and bikes lost nearby
-                    Intent intent = new Intent(this,MapsActivity.class);
+                    Intent intent = new Intent(this, MapsActivity.class);
                     startActivity(intent);
             }
         }
@@ -300,9 +319,10 @@ public class LoginTwoActivity extends FragmentActivity implements
             String personName = currentUser.getDisplayName();
             Person.Image personPhoto = currentUser.getImage();
             String personGooglePlusProfile = currentUser.getUrl();
+            String personID = currentUser.getId();
             String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
             //mStatus.setText(String.format(getResources().getString(R.string.signed_in_as),currentUser.getDisplayName()));
-            mStatus.setText(String.format(getResources().getString(R.string.signed_in_as),email));
+            mStatus.setText(String.format(getResources().getString(R.string.signed_in_as), email));
         }
 
         //mStatus.setText(String.format(getResources().getString(R.string.signed_in_as),currentUser.getDisplayName()));
@@ -311,7 +331,61 @@ public class LoginTwoActivity extends FragmentActivity implements
                 .setResultCallback(this);
 
         // Indicate that the sign in process is complete.
-        mSignInProgress = STATE_DEFAULT;
+        // Switch to other main activity as a first time login
+        // so they can come back with no problems
+        //avoids login activity looping
+        if (mSignInProgress != STATE_DEFAULT) {
+            mSignInProgress = STATE_DEFAULT;
+            //since they are logged in
+            //Intent intent = new Intent(this, MainActivity.class);
+            //startActivity(intent);
+            //or
+            //Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
+            ParseUser user = new ParseUser();
+            final String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+            Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            String personID = currentUser.getId();
+            user.setUsername(email);
+            user.setPassword(personID);
+            user.setEmail(email);
+            //user.put("firsttime", true);
+            //user.saveInBackground();
+            //user.saveEventually();
+
+            user.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        // User signed up successfully
+                        Toast.makeText(LoginTwoActivity.this, "First Timer: " + email, Toast.LENGTH_LONG).show();
+                    } else {
+                        // Error signing up user
+                        //user already exist!
+                        Toast.makeText(LoginTwoActivity.this, "Old user!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            user.logInInBackground(email, personID, new LogInCallback() {
+                //as example
+                //ParseUser.logInInBackground("Jerry", "showmethemoney", new LogInCallback() {
+                public void done(ParseUser user, ParseException e) {
+                    if (e == null && user != null) {
+                        Toast.makeText(LoginTwoActivity.this, "loginSuccessful!", Toast.LENGTH_LONG).show();
+                        Intent takeToLogin = new Intent(LoginTwoActivity.this, RegisterActivity.class);
+                        startActivity(takeToLogin);
+                    } else if (user == null) {
+                        Toast.makeText(LoginTwoActivity.this, "usernameOrPasswordIsInvalid!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginTwoActivity.this, "somethingWentWrong!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            //Toast.makeText(LoginTwoActivity.this, email, Toast.LENGTH_LONG).show();
+            //finish();
+        }
         Log.i(TAG, "onConnected DONE!");
     }
 
@@ -422,6 +496,7 @@ public class LoginTwoActivity extends FragmentActivity implements
                 int count = personBuffer.getCount();
                 for (int i = 0; i < count; i++) {
                     mCirclesList.add(personBuffer.get(i).getDisplayName());
+                    //mCirclesList.add(personBuffer.get(i).getAboutMe());
                 }
             } finally {
                 personBuffer.close();
@@ -447,6 +522,9 @@ public class LoginTwoActivity extends FragmentActivity implements
 
         mCirclesList.clear();
         mCirclesAdapter.notifyDataSetChanged();
+
+        Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
+        ParseUser.logOut();
     }
 
     @Override

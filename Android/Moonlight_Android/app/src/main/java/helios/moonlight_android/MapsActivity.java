@@ -43,10 +43,12 @@ public class MapsActivity extends FragmentActivity {
 
     List<Marker> markers = new ArrayList<Marker>();
 
-    @InjectView(R.id.btnGPSShowLocation) Button mShowGPSLocationButton;
-    @InjectView(R.id.btnShowAddress) Button mShowAddressButton;
-    @InjectView(R.id.addressTextView) TextView mAddressTextView;
-
+    @InjectView(R.id.btnGPSShowLocation)
+    Button mShowGPSLocationButton;
+    @InjectView(R.id.btnShowAddress)
+    Button mShowAddressButton;
+    @InjectView(R.id.addressTextView)
+    TextView mAddressTextView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +63,13 @@ public class MapsActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
-                if (gpsLocation != null){
+                if (gpsLocation != null) {
                     double latitude = gpsLocation.getLatitude();
                     double longitude = gpsLocation.getLongitude();
                     String result = "Latitude: " + gpsLocation.getLatitude() +
                             " Longitude: " + gpsLocation.getLongitude();
                     Toast.makeText(MapsActivity.this, result, Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     showSettingsAlert();
                 }
             }
@@ -79,7 +80,7 @@ public class MapsActivity extends FragmentActivity {
             public void onClick(View v) {
                 Location location = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
 
-                if(location != null){
+                if (location != null) {
                     final double currentLatitude = location.getLatitude();
                     final double currentLongitude = location.getLongitude();
                     final LocationAddress locationAddress = new LocationAddress();
@@ -96,11 +97,11 @@ public class MapsActivity extends FragmentActivity {
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
-                            if (marker.getTitle().equals("You are Here!") ) {
+                            if (marker.getTitle().equals("You are Here!")) {
                                 //locationAddress.getAddressFromLocation(currentLatitude, currentLongitude,
-                                        //getApplicationContext(), new GeocoderHandler());
+                                //getApplicationContext(), new GeocoderHandler());
                                 marker.setSnippet(String.valueOf(mAddressTextView.getText()));
-                                Log.i(TAG,String.valueOf(mAddressTextView.getText()) );
+                                Log.i(TAG, String.valueOf(mAddressTextView.getText()));
                                 marker.showInfoWindow();
                             }
                             return true;
@@ -117,14 +118,14 @@ public class MapsActivity extends FragmentActivity {
                     *Display Markers
                     */
                     Vector<LatLng> lostBikeVector = new Vector<>();
-                    lostBikeVector.add(new LatLng(37.331996,-120.495469));
+                    lostBikeVector.add(new LatLng(37.331996, -120.495469));
                     lostBikeVector.add(new LatLng(37.307610, -120.477389));
 
-                    for (int i = 0; i < lostBikeVector.size(); i++){
+                    for (int i = 0; i < lostBikeVector.size(); i++) {
                         final double lat = lostBikeVector.get(i).latitude;
                         final double lon = lostBikeVector.get(i).longitude;
                         final String latText = lat + "";
-                        final String longText =  lon + "";
+                        final String longText = lon + "";
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                         .position(lostBikeVector.get(i))
                                         .title("Name of Bike: " + latText + " , " + longText)
@@ -139,7 +140,7 @@ public class MapsActivity extends FragmentActivity {
                             locationAddress.getAddressFromLocation(marker.getPosition().latitude, marker.getPosition().longitude,
                                     getApplicationContext(), new GeocoderHandler());
                             marker.setSnippet(String.valueOf(mAddressTextView.getText()));
-                            Log.i(TAG,String.valueOf(mAddressTextView.getText()) );
+                            Log.i(TAG, String.valueOf(mAddressTextView.getText()));
                             marker.showInfoWindow();
                             return false;
                         }
@@ -147,8 +148,7 @@ public class MapsActivity extends FragmentActivity {
 
                     /////////////////////////////////////////////////////////////
 
-                }
-                else {
+                } else {
                     showSettingsAlert();
                 }
             }

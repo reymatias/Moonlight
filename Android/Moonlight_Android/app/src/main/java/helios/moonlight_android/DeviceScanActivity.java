@@ -25,8 +25,7 @@ import java.util.ArrayList; // Resizeable-array implementation of the 'List' int
 /**
  * Activity for scanning and displaying available BLE devices
  */
-public class DeviceScanActivity extends ListActivity
-{
+public class DeviceScanActivity extends ListActivity {
     private BluetoothAdapter btAdapter;
     private boolean scanning;
     private LeDeviceListAdapter deviceListAdapter;
@@ -39,8 +38,7 @@ public class DeviceScanActivity extends ListActivity
     private final static int REQUEST_ENABLE_BT = 1;
 
     // Setup BLE connection
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         handler = new Handler();
 
         // Initialize Bluetooth adapter
@@ -49,23 +47,21 @@ public class DeviceScanActivity extends ListActivity
         btAdapter = bluetoothManager.getAdapter();
 
         // Check if Bluetooth is supported on the device
-        if(btAdapter == null || !btAdapter.isEnabled())
-        {
+        if (btAdapter == null || !btAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
-    };
+    }
+
+    ;
 
     // Scan for BLE compatible device
-    private void scanLeDevice(final boolean enable)
-    {
-        if(enable) {
+    private void scanLeDevice(final boolean enable) {
+        if (enable) {
             // Stops scanning after a pre-defined scan period
-            handler.postDelayed(new Runnable()
-            {
+            handler.postDelayed(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     scanning = false;
                     btAdapter.stopLeScan(mLeScanCallback);
                 }
@@ -77,80 +73,82 @@ public class DeviceScanActivity extends ListActivity
         }
 
         invalidateOptionsMenu();
-    };
+    }
+
+    ;
 
     // Deliver BLE scan results
-    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback()
-    {
+    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
-        public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord)
-        {
-            runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        deviceListAdapter.addDevice(device);
-                        deviceListAdapter.notifyDataSetChanged();
-                    }
-                }
+        public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+            runOnUiThread(new Runnable() {
+                              @Override
+                              public void run() {
+                                  deviceListAdapter.addDevice(device);
+                                  deviceListAdapter.notifyDataSetChanged();
+                              }
+                          }
             );
         }
     };
 
 
     // Adapter for holding devices found through scanning
-    private class LeDeviceListAdapter extends BaseAdapter
-    {
+    private class LeDeviceListAdapter extends BaseAdapter {
         private ArrayList<BluetoothDevice> mLeDevices;
         private LayoutInflater mInflator;
 
-        public LeDeviceListAdapter()
-        {
+        public LeDeviceListAdapter() {
             super();
             mLeDevices = new ArrayList<BluetoothDevice>();
             mInflator = DeviceScanActivity.this.getLayoutInflater();
-        };
+        }
 
-        public void addDevice(BluetoothDevice device)
-        {
-            if(!mLeDevices.contains(device))
-            {
+        ;
+
+        public void addDevice(BluetoothDevice device) {
+            if (!mLeDevices.contains(device)) {
                 mLeDevices.add(device);
             }
-        };
+        }
 
-        public BluetoothDevice getDevice(int position)
-        {
+        ;
+
+        public BluetoothDevice getDevice(int position) {
             return mLeDevices.get(position);
-        };
+        }
 
-        public void clear()
-        {
+        ;
+
+        public void clear() {
             mLeDevices.clear();
-        };
+        }
+
+        ;
 
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return mLeDevices.size();
-        };
+        }
+
+        ;
 
         @Override
-        public Object getItem(int i)
-        {
+        public Object getItem(int i) {
             return mLeDevices.get(i);
-        };
+        }
+
+        ;
 
         @Override
-        public long getItemId(int i)
-        {
+        public long getItemId(int i) {
             return i;
-        };
+        }
+
+        ;
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup)
-        {
+        public View getView(int i, View view, ViewGroup viewGroup) {
             /*
             ViewHolder viewHolder;
             // General ListView optimization code
@@ -177,6 +175,8 @@ public class DeviceScanActivity extends ListActivity
             */
 
             return view;
-        };
+        }
+
+        ;
     }
 }

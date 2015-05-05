@@ -89,6 +89,19 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_reg"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".StolenListActivity"
+            android:label="@string/title_activity_reg"
+            android:screenOrientation="portrait">
+        </activity>
+
+
         <service
             android:name=".FetchAddressIntentService"
             android:exported="false"/>

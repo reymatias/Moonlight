@@ -28,5 +28,16 @@
     <string name="request_server_auth_code">Request server auth code?</string>
     <string name="configuration_error">Error: the value of WEB_CLIENT_ID or SERVER_BASE_URL is not  set correctly. This will cause errors when requesting a server auth code.</string>
     <string name="title_activity_maps">Maps</string>
+    <string name="title_activity_reg">Registration</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_make">Make</string>
+    <string name="profile_model">Model</string>
+    <string name="profile_year">Year</string>
+    <string name="profile_serial">Serial #</string>
+    <string name="profile_colors">Colors</string>
+    <string name="profile_notes">Notes:</string>
+    <string name="profile_upload">Upload Photo</string>
+    <string name="profile_submit">Save</string>
 
 </resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/profile_name"
+        android:ems="10"
+        android:id="@+id/profile_name"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_make"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:hint="@string/profile_make"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_below="@+id/profile_name" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_model"
+        android:hint="@string/profile_model"
+        android:layout_below="@+id/profile_make"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="text" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_year"
+        android:hint="@string/profile_year"
+        android:layout_below="@+id/profile_model"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_serial"
+        android:hint="@string/profile_serial"
+        android:layout_below="@+id/profile_year"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="text" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_colors"
+        android:hint="@string/profile_colors"
+        android:layout_below="@+id/profile_serial"
+        android:layout_alignParentStart="true"
+        android:ems="10"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_notes"
+        android:hint="@string/profile_notes"
+        android:layout_below="@+id/profile_colors"
+        android:layout_alignParentStart="true"
+        android:ems="10"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/profile_upload"
+        android:id="@+id/profile_upload"
+        android:layout_below="@+id/profile_notes"
+        android:layout_toStartOf="@+id/profile_snap" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_snap"
+        android:layout_alignStart="@+id/profile_submit"
+        android:layout_above="@+id/profile_submit"
+        android:layout_below="@+id/profile_notes"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_submit"
+        android:id="@+id/profile_submit"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="37dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/profile_email"
+        android:hint="Email"
+        android:layout_below="@+id/profile_name"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
