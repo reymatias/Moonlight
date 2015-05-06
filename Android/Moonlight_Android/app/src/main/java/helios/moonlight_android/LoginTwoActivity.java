@@ -24,6 +24,8 @@ import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -240,6 +242,7 @@ public class LoginTwoActivity extends FragmentActivity implements
                     mStatus.setText(R.string.status_signing_in);
                     mSignInProgress = STATE_SIGN_IN;
                     mGoogleApiClient.connect();
+                    //navigateToNavDraw(); -> DOES NOT WORK
                     break;
                 case R.id.sign_out_button:
                     // We clear the default account on sign out so that Google Play
@@ -265,7 +268,11 @@ public class LoginTwoActivity extends FragmentActivity implements
                     break;
                 case R.id.mapButton:
                     //Display the map with the current location and bikes lost nearby
+<<<<<<< Updated upstream
                     Intent intent = new Intent(this, MapsActivity.class);
+=======
+                    Intent intent = new Intent(this,NavDrawActivity.class);
+>>>>>>> Stashed changes
                     startActivity(intent);
             }
         }
@@ -307,6 +314,12 @@ public class LoginTwoActivity extends FragmentActivity implements
         mSignOutButton.setEnabled(true);
         mRevokeButton.setEnabled(true);
         mMapButton.setEnabled(true);
+
+
+        //if(mSignInProgress == STATE_DEFAULT){
+           //navigateToNavDraw();
+        //}
+
 
         // Hide the sign-in options, they no longer apply
         //findViewById(R.id.layout_server_auth).setVisibility(View.GONE);
@@ -396,6 +409,16 @@ public class LoginTwoActivity extends FragmentActivity implements
             //finish();
         }
         Log.i(TAG, "onConnected DONE!");
+        //navigateToNavDraw();
+
+
+    }
+
+    private void navigateToNavDraw() {
+        Intent intent = new Intent(this, NavDrawActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     /* onConnectionFailed is called when our Activity could not connect to Google
@@ -684,5 +707,27 @@ public class LoginTwoActivity extends FragmentActivity implements
             dialog.show();
         }
     }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 

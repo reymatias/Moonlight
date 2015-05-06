@@ -40,6 +40,20 @@
     <string name="profile_upload">Upload Photo</string>
     <string name="profile_submit">Save</string>
 
+    <!--Registration items-->
+    <string name="title_activity_reg">Registration</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_make">Make</string>
+    <string name="profile_model">Model</string>
+    <string name="profile_year">Year</string>
+    <string name="profile_serial">Serial #</string>
+    <string name="profile_colors">Colors</string>
+    <string name="profile_notes">Notes:</string>
+    <string name="profile_upload">Upload Photo</string>
+    <string name="profile_submit">Save</string>
+
+    <!--BLE item-->
     <string name="ble_not_supported">BLE is not supported</string>
     <string name="label_data">Data:</string>
     <string name="label_device_address">Device address:</string>
@@ -59,4 +73,28 @@
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+
+    <!--Navigation Drawer Activity-->
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+
+    <string name="title_section1">Bluetooth</string>
+    <string name="title_section2">Search</string>
+    <string name="title_section3">Favorites</string>
+    <string name="title_section4">Report Stolen</string>
+    <string name="title_section5">Profile</string>
+    <string name="title_section6">Return</string>
+    <string name="maps">Maps</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Report Stolen</string>
+    <string name="title_activity_nav_draw">NavDrawActivity</string>
+    <string name="sign_out_text">You have signed out!</string>
+    <string name="title_activity_logout2">Logout2Activity</string>
+    <string name="title_activity_logout">LogoutActivity</string>
+    <string name="title_activity_lost_bike">LostBikeActivity</string>
+
+
+
 </resources>

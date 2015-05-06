@@ -43,7 +43,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sample Map"
+        android:text="Continue"
         android:id="@+id/mapButton"
         android:layout_gravity="center_horizontal"
         android:enabled="false"

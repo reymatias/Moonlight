@@ -10,7 +10,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.SignInButton;
 import com.parse.Parse;
+<<<<<<< Updated upstream
 import com.parse.ParseUser;
+=======
+import com.parse.ParseObject;
+>>>>>>> Stashed changes
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
@@ -25,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         // Button listener
         mSignInButton.setOnClickListener(this);
+<<<<<<< Updated upstream
 
 
     }
@@ -44,6 +49,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Toast.makeText(MainActivity.this, "Please Login!", Toast.LENGTH_SHORT).show();
             // show the signup or login screen
         }
+=======
+>>>>>>> Stashed changes
     }
 
     @Override

@@ -90,12 +90,21 @@ public class RegisterActivity extends ActionBarActivity {
                 if (e == null) {
                     Log.d("Email", "Retrieved " + profile.getString("Email"));
                     //String name = result.getString("Name");
+<<<<<<< Updated upstream
                     mprofile_name.setText(profile.getString("title"));
                     mprofile_make.setText(profile.getString("manufacturer_name"));
                     mprofile_model.setText(profile.getString("frame_model"));
                     mprofile_year.setText(profile.getString("year"));
                     mprofile_serial.setText(profile.getString("Serial"));
                     mprofile_colors.setText(profile.getString("frame_colors"));
+=======
+                    mprofile_name.setText(profile.getString("Name"));
+                    mprofile_make.setText(profile.getString("Make"));
+                    mprofile_model.setText(profile.getString("Model"));
+                    mprofile_year.setText(profile.getString("Year"));
+                    mprofile_serial.setText(profile.getString("Serial"));
+                    mprofile_colors.setText(profile.getString("Color"));
+>>>>>>> Stashed changes
                     mprofile_notes.setText(profile.getString("Notes"));
                 } else {
                     Log.d("Email", "Error: No info given!" + e.getMessage());
@@ -130,6 +139,7 @@ public class RegisterActivity extends ActionBarActivity {
                         if (e == null) {
                             Log.d("ACC", "Updating " + profile.getString("Email"));
                             //String name = result.getString("Name");
+<<<<<<< Updated upstream
                             profile.put("title", name);
                             profile.put("Email", email);
                             profile.put("manufacturer_name", make);
@@ -137,12 +147,22 @@ public class RegisterActivity extends ActionBarActivity {
                             profile.put("year", year);
                             profile.put("Serial", serial);
                             profile.put("frame_colors", colors);
+=======
+                            profile.put("Name", name);
+                            profile.put("Email", email);
+                            profile.put("Make", make);
+                            profile.put("Model", model);
+                            profile.put("Year", year);
+                            profile.put("Serial", serial);
+                            profile.put("Color", colors);
+>>>>>>> Stashed changes
                             profile.put("Notes", notes);
                             profile.put("OwnerID", relationID);
                             profile.saveInBackground();
                         } else {
                             Log.d("ACC", "Creating New" + e.getMessage());
                             ParseObject newprofile = new ParseObject("BikeProfile");
+<<<<<<< Updated upstream
                             newprofile.put("title", name);
                             newprofile.put("Email", email);
                             newprofile.put("manufacturer_name", make);
@@ -150,6 +170,15 @@ public class RegisterActivity extends ActionBarActivity {
                             newprofile.put("year", year);
                             newprofile.put("Serial", serial);
                             newprofile.put("frame_colors", colors);
+=======
+                            newprofile.put("Name", name);
+                            newprofile.put("Email", email);
+                            newprofile.put("Make", make);
+                            newprofile.put("Model", model);
+                            newprofile.put("Year", year);
+                            newprofile.put("Serial", serial);
+                            newprofile.put("Color", colors);
+>>>>>>> Stashed changes
                             newprofile.put("Notes", notes);
                             newprofile.put("OwnerID", relationID);
                             newprofile.saveInBackground();

@@ -16,9 +16,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -63,9 +60,13 @@ public class MapsActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+<<<<<<< Updated upstream
                 if (gpsLocation != null) {
                     double latitude = gpsLocation.getLatitude();
                     double longitude = gpsLocation.getLongitude();
+=======
+                if (gpsLocation != null){
+>>>>>>> Stashed changes
                     String result = "Latitude: " + gpsLocation.getLatitude() +
                             " Longitude: " + gpsLocation.getLongitude();
                     Toast.makeText(MapsActivity.this, result, Toast.LENGTH_LONG).show();
