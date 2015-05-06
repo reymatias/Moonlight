@@ -349,9 +349,8 @@ public class LoginTwoActivity extends FragmentActivity implements
             user.setUsername(email);
             user.setPassword(personID);
             user.setEmail(email);
-            //user.put("firsttime", true);
-            //user.saveInBackground();
-            //user.saveEventually();
+            user.put("FirstTimer", true);
+            //sign up check
 
             user.signUpInBackground(new SignUpCallback() {
                 @Override
@@ -372,11 +371,21 @@ public class LoginTwoActivity extends FragmentActivity implements
                 //ParseUser.logInInBackground("Jerry", "showmethemoney", new LogInCallback() {
                 public void done(ParseUser user, ParseException e) {
                     if (e == null && user != null) {
-                        Toast.makeText(LoginTwoActivity.this, "loginSuccessful!", Toast.LENGTH_LONG).show();
-                        Intent takeToLogin = new Intent(LoginTwoActivity.this, RegisterActivity.class);
-                        startActivity(takeToLogin);
-                    } else if (user == null) {
-                        Toast.makeText(LoginTwoActivity.this, "usernameOrPasswordIsInvalid!", Toast.LENGTH_LONG).show();
+                        if (user.getBoolean("FirstTimer")) {
+                            user.put("FirstTimer", false);
+                            user.saveInBackground();
+                            Toast.makeText(LoginTwoActivity.this, "FirstTimer!", Toast.LENGTH_LONG).show();
+                            Intent takeToLogin = new Intent(LoginTwoActivity.this, RegisterActivity.class);
+                            startActivity(takeToLogin);
+                        }
+                        else {//false
+                            Toast.makeText(LoginTwoActivity.this, "NotFirstTimer!", Toast.LENGTH_LONG).show();
+                            Intent take = new Intent(LoginTwoActivity.this, StolenListActivity.class);
+                            startActivity(take);
+                        }
+                    }
+                    else if (user == null) {
+                        Toast.makeText(LoginTwoActivity.this, "Please try login again!!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(LoginTwoActivity.this, "somethingWentWrong!", Toast.LENGTH_LONG).show();
                     }

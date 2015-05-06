@@ -90,12 +90,12 @@ public class RegisterActivity extends ActionBarActivity {
                 if (e == null) {
                     Log.d("Email", "Retrieved " + profile.getString("Email"));
                     //String name = result.getString("Name");
-                    mprofile_name.setText(profile.getString("Name"));
-                    mprofile_make.setText(profile.getString("Make"));
-                    mprofile_model.setText(profile.getString("Model"));
-                    mprofile_year.setText(profile.getString("Year"));
+                    mprofile_name.setText(profile.getString("title"));
+                    mprofile_make.setText(profile.getString("manufacturer_name"));
+                    mprofile_model.setText(profile.getString("frame_model"));
+                    mprofile_year.setText(profile.getString("year"));
                     mprofile_serial.setText(profile.getString("Serial"));
-                    mprofile_colors.setText(profile.getString("Color"));
+                    mprofile_colors.setText(profile.getString("frame_colors"));
                     mprofile_notes.setText(profile.getString("Notes"));
                 } else {
                     Log.d("Email", "Error: No info given!" + e.getMessage());
@@ -130,26 +130,26 @@ public class RegisterActivity extends ActionBarActivity {
                         if (e == null) {
                             Log.d("ACC", "Updating " + profile.getString("Email"));
                             //String name = result.getString("Name");
-                            profile.put("Name", name);
+                            profile.put("title", name);
                             profile.put("Email", email);
-                            profile.put("Make", make);
-                            profile.put("Model", model);
-                            profile.put("Year", year);
+                            profile.put("manufacturer_name", make);
+                            profile.put("frame_model", model);
+                            profile.put("year", year);
                             profile.put("Serial", serial);
-                            profile.put("Color", colors);
+                            profile.put("frame_colors", colors);
                             profile.put("Notes", notes);
                             profile.put("OwnerID", relationID);
                             profile.saveInBackground();
                         } else {
                             Log.d("ACC", "Creating New" + e.getMessage());
                             ParseObject newprofile = new ParseObject("BikeProfile");
-                            newprofile.put("Name", name);
+                            newprofile.put("title", name);
                             newprofile.put("Email", email);
-                            newprofile.put("Make", make);
-                            newprofile.put("Model", model);
-                            newprofile.put("Year", year);
+                            newprofile.put("manufacturer_name", make);
+                            newprofile.put("frame_model", model);
+                            newprofile.put("year", year);
                             newprofile.put("Serial", serial);
-                            newprofile.put("Color", colors);
+                            newprofile.put("frame_colors", colors);
                             newprofile.put("Notes", notes);
                             newprofile.put("OwnerID", relationID);
                             newprofile.saveInBackground();
