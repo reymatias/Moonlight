@@ -402,7 +402,5 @@ public class BluetoothLeService extends Service {
         public void notifyConnectedGATT();
 
         public void notifyDisconnectedGATT();
-
-        // public void displayGATTServices();
     }
 }

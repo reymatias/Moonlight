@@ -1,121 +1,113 @@
-/*
- PROJECT: ArduDroid 
- PROGRAMMER: Hazim Bitar (techbitar at gmail dot com)
- DATE: Oct 31, 2013
- FILE: ardudroid.ino
- LICENSE: Public domain
-*/
+#include <SoftwareSerial.h>
+#include <BLEShield.h>
 
-/*
- Hexadecimal values for control for Arduino provided by sponsors
- 
- ON: Ox6f6e
- OFF: 0x6f6666
-*/
+// Pins:
+int led = A2;  // Assign pin for headlight
+int led2 = 2;  // Assign pin for headlight (LOW mode)
 
-#define START_CMD_CHAR '*'
-#define END_CMD_CHAR '#'
-#define DIV_CMD_CHAR '|'
-#define CMD_DIGITALWRITE 10
-#define CMD_ANALOGWRITE 11
-#define CMD_TEXT 12
-#define CMD_READ_ARDUDROID 13
-#define MAX_COMMAND 20  // max command number code. used for error checking.
-#define MIN_COMMAND 10  // minimum command number code. used for error checking. 
-#define IN_STRING_LENGHT 40
-#define MAX_ANALOGWRITE 255
-#define PIN_HIGH 3
-#define PIN_LOW 2
-
-String inText;
+BLEShield bluetoothy;  // Setup BLE Shield
+int conn = 0;          // BLE connection
+String message = "";   // Variable to store buffer
+boolean flag = true;   // Stolen light pattern on by default
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Moonlight 2015");
-  Serial.flush();
+  pinMode(led, OUTPUT);  // Initialize the light switch pin 
+  Serial.begin(9600);    // Initialize serial and wait for port to open
 }
 
-void loop()
-{
-  Serial.flush();
-  int ard_command = 0;
-  int pin_num = 0;
-  int pin_value = 0;
+void loop() {
+  //Add incoming data to buffer
+  if (bluetoothy.available()>0){
+    char buffer[64];                // Create a buffer to hold the received data
+    bluetoothy.readChars(buffer);   // Read the data
+    message = buffer;
+  } 
+  //Print out buffer when data transfer is complete
+  else{
+    if(message != "" && message != " " && message != 0)
+    {
+      Serial.println(message);
+      message.toLowerCase();
+      
+      if(message == "on") {
+        flag = false;
+      } else if(message == "off") {
+        flag = true;
+      }  
+    }
+    
+    if(flag == true) {
+      stolenPattern();
+    } else if(flag == false) {
+      defaultPattern();
+    }
+  } 
+}
 
-  char get_char = ' ';  //read serial
+void defaultPattern() {
+  analogWrite(led, 255);
+  analogWrite(led2, 255); 
+  delay(100);
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
+}
 
-  // wait for incoming data
-  if (Serial.available() < 1) return; // if serial empty, return to loop().
-
-  // parse incoming command start flag 
-  get_char = Serial.read();
-  if (get_char != START_CMD_CHAR) return; // if no command start flag, return to loop().
-
-  // parse incoming command type
-  ard_command = Serial.parseInt(); // read the command
+void stolenPattern() {
+  analogWrite(led, 255);
+  analogWrite(led2, 255); 
+  delay(100);
+  analogWrite(led, 0);
+  analogWrite(led2, 0); 
+  delay(100);
+  analogWrite(led, 255);
+  analogWrite(led2, 255);
+  delay(100); 
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
+  analogWrite(led, 255);
+  analogWrite(led2, 255);
+  delay(100); 
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
   
-  // parse incoming pin# and value  
-  pin_num = Serial.parseInt(); // read the pin
-  pin_value = Serial.parseInt();  // read the value
-
-  // 1) GET TEXT COMMAND FROM ARDUDROID
-  if (ard_command == CMD_TEXT){   
-    inText =""; //clears variable for new input   
-    while (Serial.available())  {
-      char c = Serial.read();  //gets one byte from serial buffer
-      delay(5);
-      if (c == END_CMD_CHAR) { // if we the complete string has been read
-        // add your code here
-        break;
-      }              
-      else {
-        if (c !=  DIV_CMD_CHAR) {
-          inText += c; 
-          delay(5);
-        }
-      }
-    }
-  }
-
-  // 2) GET digitalWrite DATA FROM ARDUDROID
-  if (ard_command == CMD_DIGITALWRITE){  
-    if (pin_value == PIN_LOW) pin_value = LOW;
-    else if (pin_value == PIN_HIGH) pin_value = HIGH;
-    else return; // error in pin value. return. 
-    set_digitalwrite( pin_num,  pin_value);  // Uncomment this function if you wish to use 
-    return;  // return from start of loop()
-  }
-
-  // 3) GET analogWrite DATA FROM ARDUDROID
-  if (ard_command == CMD_ANALOGWRITE) {  
-    analogWrite(  pin_num, pin_value ); 
-    // add your code here
-    return;  // Done. return to loop();
-  }
-
-  // 4) SEND DATA TO ARDUDROID
-  if (ard_command == CMD_READ_ARDUDROID) { 
-    // char send_to_android[] = "Place your text here." ;
-    // Serial.println(send_to_android);   // Example: Sending text
-    Serial.print(" Analog 0 = "); 
-    Serial.println(analogRead(A0));  // Example: Read and send Analog pin value to Arduino
-    return;  // Done. return to loop();
-  }
+  analogWrite(led, 255);
+  analogWrite(led2, 255);  
+  delay(1000);
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
+  analogWrite(led, 255);
+  analogWrite(led2, 255);  
+  delay(1000);
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
+  analogWrite(led, 255);
+  analogWrite(led2, 255);  
+  delay(1000);
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
+  
+  analogWrite(led, 255);
+  analogWrite(led2, 255); 
+  delay(100);
+  analogWrite(led, 0);
+  analogWrite(led2, 0); 
+  delay(100);
+  analogWrite(led, 255);
+  analogWrite(led2, 255);
+  delay(100); 
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(100);
+  analogWrite(led, 255);
+  analogWrite(led2, 255);
+  delay(100); 
+  analogWrite(led, 0);
+  analogWrite(led2, 0);
+  delay(500);
 }
-
-// 2a) select the requested pin# for DigitalWrite action
-void set_digitalwrite(int pin_num, int pin_value)
-{
-    int counter = 0;
-    while(counter != 5){
-    pinMode(pin_num, OUTPUT);
-    digitalWrite(pin_num, HIGH);
-    delay(1000);
-    digitalWrite(pin_num, LOW);
-    delay(1000);
-    counter++;
-    }
-    digitalWrite(pin_num, LOW);
-    delay(1000);    
-}
-
