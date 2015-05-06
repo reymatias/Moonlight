@@ -67,23 +67,58 @@
             android:text="@string/disconnected"
             android:textSize="18sp"/>
     </LinearLayout>
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <TextView android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="100px" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_data"
-            android:textSize="18sp"/>
-        <Space android:layout_width="5dp"
-            android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/data_value"
+            android:text="Theft Recovery Lights"
+            android:textSize="18sp"
+            android:id="@+id/theft_lights"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_data"
-            android:textSize="18sp"/>
+            android:id="@+id/theft_on"
+            android:layout_gravity="center_horizontal"
+            android:text="Turn On"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Turn Off"
+            android:id="@+id/theft_off"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reset_config"
+            android:layout_gravity="center_horizontal"
+            android:text="Reset Configuration"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Device List"
+            android:id="@+id/device_list"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
     </LinearLayout>
-    <ExpandableListView android:id="@+id/gatt_services_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 </LinearLayout>

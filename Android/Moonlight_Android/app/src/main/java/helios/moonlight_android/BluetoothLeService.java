@@ -18,21 +18,27 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
+import java.lang.String;
 import java.util.List;
 import java.util.UUID;
 
 public class BluetoothLeService extends Service {
-    private final static String TAG = BluetoothLeService.class.getSimpleName();
+    public static UUID service_uuid = UUID.fromString(GattAttributes.HELIOS_CONFIG);
+    public static UUID characteristic_uuid = UUID.fromString(GattAttributes.HELIOS_RX_TX);
 
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private String mBluetoothDeviceAddress;
-    private BluetoothGatt mBluetoothGatt;
+    public  BluetoothGatt mBluetoothGatt;
     private BLEServiceCallback mBLEServiceCb = null;
+    private BluetoothGattCharacteristic mWriteCharacteristic;
 
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
+
+    private String mStringToWrite;
+    private boolean mLargeDistance = false;
 
     private int mConnectionState = STATE_DISCONNECTED;
 
@@ -41,6 +47,10 @@ public class BluetoothLeService extends Service {
 
     private final long READING_RSSI_TASK_FREQENCY = 500;
     private static final int READ_RSSI_REPEAT = 1;
+
+    public BluetoothGatt getBluetoothGatt() {
+        return mBluetoothGatt;
+    }
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -105,7 +115,7 @@ public class BluetoothLeService extends Service {
 
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 if (mBLEServiceCb != null) {
-                    mBLEServiceCb.displayGATTServices();
+                    // mBLEServiceCb.displayGATTServices();
                 }
 
             } else {
@@ -275,7 +285,7 @@ public class BluetoothLeService extends Service {
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
+        mBluetoothGatt = device.connectGatt(this, true, mGattCallback);
         Log.d("", "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;
@@ -306,6 +316,7 @@ public class BluetoothLeService extends Service {
         }
         mBluetoothGatt.close();
         mBluetoothGatt = null;
+        mWriteCharacteristic = null;
     }
 
     /**
@@ -324,10 +335,21 @@ public class BluetoothLeService extends Service {
     }
 
     /**
-     * Requst a write on a give {@code BluetoothGattCharacteristic}. The write result is reported
+     * Request a write on a give {@code BluetoothGattCharacteristic}. The write result is reported
      * asynchronously through the {@code BluetoothGattCallback#onCharacteristicWrite(andorid.bluetooth.BluetoothGatt, android.bluetooth.BluetoothGattCharacteristic, int)}
      * callback.
      */
+    public void writeCharacteristic_new(byte[] value) {
+        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
+            Log.w("", "BluetoothAdapter not initialized");
+            return;
+        }
+
+        mWriteCharacteristic = mBluetoothGatt.getService(service_uuid).getCharacteristic(characteristic_uuid);
+        mWriteCharacteristic.setValue(value);
+        mBluetoothGatt.writeCharacteristic(mWriteCharacteristic);
+    }
+
     public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w("", "BluetoothAdapter not initialized");
@@ -380,6 +402,6 @@ public class BluetoothLeService extends Service {
 
         public void notifyDisconnectedGATT();
 
-        public void displayGATTServices();
+        // public void displayGATTServices();
     }
 }
