@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
@@ -84,19 +85,22 @@ public class StolenListActivity extends ActionBarActivity {
         mlist_item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-/*                String name = ((TextView) view.findViewById(R.id.name))
+                String title = ((TextView) view.findViewById(R.id.title))
                         .getText().toString();
-                String email = ((TextView) view.findViewById(R.id.email))
+                String stolen_location = ((TextView) view.findViewById(R.id.stolen_location))
                         .getText().toString();
-                String mobile = ((TextView) view.findViewById(R.id.mobile))
+                String bike_id = ((TextView) view.findViewById(R.id.id))
                         .getText().toString();
 
-                Starting single contact activity
-                Intent in = new Intent(getApplicationContext(),SingleContactActivity.class);
-                in.putExtra(TAG_NAME, name);
-                in.putExtra(TAG_EMAIL, cost);
-                in.putExtra(TAG_PHONE_MOBILE, description);
-                startActivity(in);*/
+                //Starting single contact activity
+                Intent in = new Intent(getApplicationContext(), LoginTwoActivity.class);
+                in.putExtra(TAG_TITLE, title);
+                //in.putExtra(TAG_ID, bike_id);
+                //in.getStringExtra(TAG_ID);
+                //Log.d(TAG, in.getStringExtra(TAG_ID));
+                in.putExtra(TAG_STOLEN_LOCATION, stolen_location);
+                //in.putExtra(TAG_PHONE_MOBILE, description);
+                startActivity(in);
             }
         });
 
@@ -258,14 +262,13 @@ public class StolenListActivity extends ActionBarActivity {
     private void updateDisplay() {
         ListAdapter adapter = new SimpleAdapter(
                 StolenListActivity.this, bikeList,
-                R.layout.list_item, new String[] { TAG_TITLE,
-                TAG_STOLEN_LOCATION }, new int[] { R.id.title,
-                R.id.stolen_location});
+                R.layout.list_item, new String[]{TAG_TITLE,
+                TAG_STOLEN_LOCATION,TAG_ID}, new int[]{R.id.title,
+                R.id.stolen_location, R.id.id});
 
 //        setListAdapter(adapter);
         Log.d(TAG, "mlist_item.setAdapter(adapter);");
         mlist_item.setAdapter(adapter);
-
 
 
     }

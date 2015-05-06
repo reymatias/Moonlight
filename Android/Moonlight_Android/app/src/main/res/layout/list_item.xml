@@ -30,14 +30,14 @@
         android:textColor="#acacac" />
 
 
-<!--    &lt;!&ndash; Mobile number label &ndash;&gt;
+    <!-- Mobile number label -->
     <TextView
-        android:id="@+id/mobile"
+        android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:text="Mobile: "
+        android:text="ID: "
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />-->
+        android:textStyle="bold" />
 
 </LinearLayout>
