@@ -109,6 +109,7 @@ public class MapsActivity extends ActionBarActivity {
                      LatLng latLng = new LatLng(currentLatitude, currentLongitude);
                      /*Collects data from Bike Index*/
                      getIdList(latLng);
+                     /*Collect Data from parse and display*/
 
                      final LocationAddress locationAddress = new LocationAddress();
                      locationAddress.getAddressFromLocation(currentLatitude, currentLongitude,

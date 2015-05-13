@@ -18,25 +18,14 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/report_stolen_location"
-            android:hint="Last seen at"
-            android:nestedScrollingEnabled="true"
-            android:layout_below="@+id/textView2"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginTop="38dp"
-            android:layout_alignEnd="@+id/textView2" />
-
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Use Current Location"
-            android:id="@+id/checkBox"
+            android:id="@+id/currentLoc_checkbox"
             android:checked="false"
             android:textSize="15dp"
-            android:layout_below="@+id/report_stolen_location"
+            android:layout_below="@+id/report_stolen_loc_textView"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -46,36 +35,77 @@
             android:id="@+id/contact_info_label"
             android:textSize="25dp"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:id="@+id/checkBox2"
-            android:layout_below="@+id/contact_info_label"
-            android:layout_alignStart="@+id/checkBox3"
+            android:id="@+id/email_checkBox"
             android:checked="true"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:layout_below="@+id/contact_info_label"
+            android:layout_alignStart="@+id/textView2" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Phone"
-            android:id="@+id/checkBox3"
-            android:layout_below="@+id/checkBox2"
-            android:layout_centerHorizontal="true"
+            android:id="@+id/phone_checkBox"
             android:checked="false"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:layout_below="@+id/email_checkBox"
+            android:layout_alignStart="@+id/email_checkBox" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
-            android:id="@+id/button"
-            android:layout_below="@+id/checkBox3"
+            android:id="@+id/report_button"
+            android:layout_below="@+id/phone_checkBox"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="66dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:ems="10"
+            android:id="@+id/report_stolen_loc_textView"
+            android:layout_below="@+id/textView2"
+            android:hint="Last seen at"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addressTextView"
+            android:layout_below="@+id/currentLoc_checkbox"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/email_id_textView"
+            android:textSize="15dp"
+            android:text="ngfdgfdhfgdj@gmail.com"
+            android:layout_alignBottom="@+id/email_checkBox"
+            android:layout_alignTop="@+id/email_checkBox"
+            android:layout_alignEnd="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone_number_textView"
+            android:textSize="15dp"
+            android:text="ngfdgfdhfgdj@gmail.com"
+            android:layout_alignTop="@+id/phone_checkBox"
+            android:layout_alignStart="@+id/email_id_textView" />
 
     </RelativeLayout>
 </FrameLayout>
