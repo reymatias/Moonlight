@@ -346,6 +346,7 @@ public class BluetoothLeService extends Service {
             return;
         }
 
+
         mWriteCharacteristic = mBluetoothGatt.getService(service_uuid).getCharacteristic(characteristic_uuid);
         mWriteCharacteristic.setValue(value);
         mBluetoothGatt.writeCharacteristic(mWriteCharacteristic);
@@ -402,10 +403,6 @@ public class BluetoothLeService extends Service {
         public void notifyConnectedGATT();
 
         public void notifyDisconnectedGATT();
-<<<<<<< Updated upstream
-=======
 
-        // public void displayGATTServices();
->>>>>>> Stashed changes
     }
 }

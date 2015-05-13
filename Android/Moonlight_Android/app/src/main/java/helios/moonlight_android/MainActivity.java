@@ -10,11 +10,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.SignInButton;
 import com.parse.Parse;
-<<<<<<< Updated upstream
 import com.parse.ParseUser;
-=======
 import com.parse.ParseObject;
->>>>>>> Stashed changes
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
@@ -29,8 +26,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         // Button listener
         mSignInButton.setOnClickListener(this);
-<<<<<<< Updated upstream
-
 
     }
 
@@ -49,8 +44,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Toast.makeText(MainActivity.this, "Please Login!", Toast.LENGTH_SHORT).show();
             // show the signup or login screen
         }
-=======
->>>>>>> Stashed changes
     }
 
     @Override
@@ -88,4 +81,23 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        try {
+                     // check if any view exists on current view
+                     //style = ((Button) findViewById(R.id.xyz_button));
+                 } catch (Exception e) {
+                     // Button was not found
+                     // It means, your button doesn't exist on the "current" view
+                     // It was freed from the memory, therefore stop of activity was performed
+                     // In this case I restart my app
+                     Intent i = new Intent();
+                     i.setClass(getApplicationContext(), MainActivity.class);
+                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                     startActivity(i);
+                     // Show toast to the user
+                     Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
+                 }
+    }
 }

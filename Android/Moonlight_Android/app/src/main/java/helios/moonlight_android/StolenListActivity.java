@@ -1,6 +1,5 @@
 package helios.moonlight_android;
 
-<<<<<<< Updated upstream
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -35,24 +34,18 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-=======
 import android.support.v7.app.ActionBarActivity;
->>>>>>> Stashed changes
 
 /**
  * Created by MoeSaiko on 5/1/2015.
  */
 public class StolenListActivity extends ActionBarActivity {
 
-<<<<<<< Updated upstream
     //private CurrentStolen mCurrentStolen;
 
-    @InjectView(R.id.refreshImageView)
-    ImageView mRefreshImageView;
-    @InjectView(R.id.progressBar)
-    ProgressBar mProgressBar;
-    @InjectView(R.id.list_item)
-    ListView mlist_item;
+    @InjectView(R.id.refreshImageView)ImageView mRefreshImageView;
+    @InjectView(R.id.progressBar)ProgressBar mProgressBar;
+    @InjectView(R.id.list_item)ListView mlist_item;
 
     public static final String TAG = StolenListActivity.class.getSimpleName();
 
@@ -219,6 +212,10 @@ public class StolenListActivity extends ActionBarActivity {
                                     Log.d(TAG, "updateDisplay();");
                                     updateDisplay();
                                     toggleRefresh();
+                                    //Refresh button does not work properly until these
+                                    //two lines are added
+                                    mProgressBar.setVisibility(View.INVISIBLE);
+                                    mRefreshImageView.setVisibility(View.VISIBLE);
                                 }
                             });
                         } else {
@@ -277,14 +274,4 @@ public class StolenListActivity extends ActionBarActivity {
 
 
     }
-=======
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
 }

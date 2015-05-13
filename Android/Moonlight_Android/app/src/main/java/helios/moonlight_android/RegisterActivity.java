@@ -43,28 +43,17 @@ public class RegisterActivity extends ActionBarActivity {
     protected TextView profile_upload;
     protected Button profile_submit;*/
 
-    @InjectView(R.id.profile_name)
-    EditText mprofile_name;
-    @InjectView(R.id.profile_email)
-    TextView mprofile_email;
-    @InjectView(R.id.profile_make)
-    EditText mprofile_make;
-    @InjectView(R.id.profile_model)
-    EditText mprofile_model;
-    @InjectView(R.id.profile_year)
-    EditText mprofile_year;
-    @InjectView(R.id.profile_serial)
-    EditText mprofile_serial;
-    @InjectView(R.id.profile_colors)
-    EditText mprofile_colors;
-    @InjectView(R.id.profile_notes)
-    EditText mprofile_notes;
-    @InjectView(R.id.profile_upload)
-    TextView mprofile_upload;
-    @InjectView(R.id.profile_submit)
-    Button mprofile_submit;
-    @InjectView(R.id.profile_snap)
-    ImageButton mprofile_snap;
+    @InjectView(R.id.profile_name)EditText mprofile_name;
+    @InjectView(R.id.profile_email)TextView mprofile_email;
+    @InjectView(R.id.profile_make)EditText mprofile_make;
+    @InjectView(R.id.profile_model)EditText mprofile_model;
+    @InjectView(R.id.profile_year)EditText mprofile_year;
+    @InjectView(R.id.profile_serial)EditText mprofile_serial;
+    @InjectView(R.id.profile_colors)EditText mprofile_colors;
+    @InjectView(R.id.profile_notes)EditText mprofile_notes;
+    @InjectView(R.id.profile_upload)TextView mprofile_upload;
+    @InjectView(R.id.profile_submit)Button mprofile_submit;
+    @InjectView(R.id.profile_snap)ImageButton mprofile_snap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,21 +79,13 @@ public class RegisterActivity extends ActionBarActivity {
                 if (e == null) {
                     Log.d("Email", "Retrieved " + profile.getString("Email"));
                     //String name = result.getString("Name");
-<<<<<<< Updated upstream
-                    mprofile_name.setText(profile.getString("title"));
-                    mprofile_make.setText(profile.getString("manufacturer_name"));
-                    mprofile_model.setText(profile.getString("frame_model"));
-                    mprofile_year.setText(profile.getString("year"));
-                    mprofile_serial.setText(profile.getString("Serial"));
-                    mprofile_colors.setText(profile.getString("frame_colors"));
-=======
+
                     mprofile_name.setText(profile.getString("Name"));
                     mprofile_make.setText(profile.getString("Make"));
                     mprofile_model.setText(profile.getString("Model"));
                     mprofile_year.setText(profile.getString("Year"));
                     mprofile_serial.setText(profile.getString("Serial"));
                     mprofile_colors.setText(profile.getString("Color"));
->>>>>>> Stashed changes
                     mprofile_notes.setText(profile.getString("Notes"));
                 } else {
                     Log.d("Email", "Error: No info given!" + e.getMessage());
@@ -139,15 +120,7 @@ public class RegisterActivity extends ActionBarActivity {
                         if (e == null) {
                             Log.d("ACC", "Updating " + profile.getString("Email"));
                             //String name = result.getString("Name");
-<<<<<<< Updated upstream
-                            profile.put("title", name);
-                            profile.put("Email", email);
-                            profile.put("manufacturer_name", make);
-                            profile.put("frame_model", model);
-                            profile.put("year", year);
-                            profile.put("Serial", serial);
-                            profile.put("frame_colors", colors);
-=======
+
                             profile.put("Name", name);
                             profile.put("Email", email);
                             profile.put("Make", make);
@@ -155,22 +128,12 @@ public class RegisterActivity extends ActionBarActivity {
                             profile.put("Year", year);
                             profile.put("Serial", serial);
                             profile.put("Color", colors);
->>>>>>> Stashed changes
                             profile.put("Notes", notes);
                             profile.put("OwnerID", relationID);
                             profile.saveInBackground();
                         } else {
                             Log.d("ACC", "Creating New" + e.getMessage());
                             ParseObject newprofile = new ParseObject("BikeProfile");
-<<<<<<< Updated upstream
-                            newprofile.put("title", name);
-                            newprofile.put("Email", email);
-                            newprofile.put("manufacturer_name", make);
-                            newprofile.put("frame_model", model);
-                            newprofile.put("year", year);
-                            newprofile.put("Serial", serial);
-                            newprofile.put("frame_colors", colors);
-=======
                             newprofile.put("Name", name);
                             newprofile.put("Email", email);
                             newprofile.put("Make", make);
@@ -178,7 +141,6 @@ public class RegisterActivity extends ActionBarActivity {
                             newprofile.put("Year", year);
                             newprofile.put("Serial", serial);
                             newprofile.put("Color", colors);
->>>>>>> Stashed changes
                             newprofile.put("Notes", notes);
                             newprofile.put("OwnerID", relationID);
                             newprofile.saveInBackground();
@@ -190,6 +152,8 @@ public class RegisterActivity extends ActionBarActivity {
                 Toast.makeText(RegisterActivity.this, "SAVED!", Toast.LENGTH_LONG).show();
             }
         });
+        Intent intent = new Intent(this, NavDrawActivity.class);
+        startActivity(intent);
 
 
     }

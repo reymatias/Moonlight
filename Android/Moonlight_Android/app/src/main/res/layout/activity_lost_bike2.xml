@@ -1,4 +1,81 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context="helios.moonlight_android.LostBikeActivity" tools:ignore="MergeRootFrame" />
+    tools:context="helios.moonlight_android.LostBikeActivity" tools:ignore="MergeRootFrame" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left|top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/report_stolen_bike_title"
+            android:id="@+id/textView2"
+            android:layout_marginTop="50dp"
+            android:textSize="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_stolen_location"
+            android:hint="Last seen at"
+            android:nestedScrollingEnabled="true"
+            android:layout_below="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_marginTop="38dp"
+            android:layout_alignEnd="@+id/textView2" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Current Location"
+            android:id="@+id/checkBox"
+            android:checked="false"
+            android:textSize="15dp"
+            android:layout_below="@+id/report_stolen_location"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Information"
+            android:id="@+id/contact_info_label"
+            android:textSize="25dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:id="@+id/checkBox2"
+            android:layout_below="@+id/contact_info_label"
+            android:layout_alignStart="@+id/checkBox3"
+            android:checked="true"
+            android:textSize="15dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone"
+            android:id="@+id/checkBox3"
+            android:layout_below="@+id/checkBox2"
+            android:layout_centerHorizontal="true"
+            android:checked="false"
+            android:textSize="15dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:id="@+id/button"
+            android:layout_below="@+id/checkBox3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="66dp" />
+
+    </RelativeLayout>
+</FrameLayout>

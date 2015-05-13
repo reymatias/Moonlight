@@ -28,20 +28,10 @@
     <string name="request_server_auth_code">Request server auth code?</string>
     <string name="configuration_error">Error: the value of WEB_CLIENT_ID or SERVER_BASE_URL is not  set correctly. This will cause errors when requesting a server auth code.</string>
     <string name="title_activity_maps">Maps</string>
-    <string name="title_activity_reg">Registration</string>
-    <string name="profile_name">Name</string>
-    <string name="profile_email">Email</string>
-    <string name="profile_make">Make</string>
-    <string name="profile_model">Model</string>
-    <string name="profile_year">Year</string>
-    <string name="profile_serial">Serial #</string>
-    <string name="profile_colors">Colors</string>
-    <string name="profile_notes">Notes:</string>
-    <string name="profile_upload">Upload Photo</string>
-    <string name="profile_submit">Save</string>
 
     <!--Registration items-->
     <string name="title_activity_reg">Registration</string>
+    <string name="title_activity_stolen">Stolen Bikes</string>
     <string name="profile_name">Name</string>
     <string name="profile_email">Email</string>
     <string name="profile_make">Make</string>
@@ -63,6 +53,7 @@
     <string name="disconnected">Disconnected</string>
     <string name="title_devices">BLE Device Scan</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
+    <string name="title_bluetooth_control"> Bluetooth control</string>
 
     <string name="unknown_device">Unknown device</string>
     <string name="unknown_characteristic">Unknown characteristic</string>
@@ -94,7 +85,7 @@
     <string name="title_activity_logout2">Logout2Activity</string>
     <string name="title_activity_logout">LogoutActivity</string>
     <string name="title_activity_lost_bike">LostBikeActivity</string>
-
+    <string name="report_stolen_bike_title">Report Your Stolen Bike</string>
 
 
 </resources>

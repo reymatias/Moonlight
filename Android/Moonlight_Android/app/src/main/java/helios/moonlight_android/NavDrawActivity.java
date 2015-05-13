@@ -56,24 +56,30 @@ public class NavDrawActivity extends ActionBarActivity
         switch(position) {
             default:
             case 0:
-                fragment = new BluetoothFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment)
-                        .commit();
+                Intent bluetooth = new Intent(this, DeviceControlActivity.class);
+                startActivity(bluetooth);
                 break;
             case 1:
-                fragment = new LostBikeListFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment)
-                        .commit();
+                Intent lostBikes = new Intent(this, StolenListActivity.class);
+                //lostBikes.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //lostBikes.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(lostBikes);
+//                fragment = new LostBikeListFragment();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.container, fragment)
+//                        .commit();
                 break;
             case 2:
+//                Intent lostBikes = new Intent(this, FavoriteListActivity.class);
+//                startActivity(lostBikes);
                 break;
             case 3:
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
                 break;
             case 4:
+                Intent reportStolen = new Intent(this,LostBikeActivity.class);
+                startActivity(reportStolen);
                 break;
             case 5:
                 break;

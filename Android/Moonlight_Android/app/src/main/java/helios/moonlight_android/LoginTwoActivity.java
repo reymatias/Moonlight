@@ -268,11 +268,7 @@ public class LoginTwoActivity extends FragmentActivity implements
                     break;
                 case R.id.mapButton:
                     //Display the map with the current location and bikes lost nearby
-<<<<<<< Updated upstream
-                    Intent intent = new Intent(this, MapsActivity.class);
-=======
                     Intent intent = new Intent(this,NavDrawActivity.class);
->>>>>>> Stashed changes
                     startActivity(intent);
             }
         }
@@ -393,8 +389,8 @@ public class LoginTwoActivity extends FragmentActivity implements
                         }
                         else {//false
                             Toast.makeText(LoginTwoActivity.this, "NotFirstTimer!", Toast.LENGTH_LONG).show();
-                            Intent take = new Intent(LoginTwoActivity.this, StolenListActivity.class);
-                            startActivity(take);
+                            //Intent take = new Intent(LoginTwoActivity.this, StolenListActivity.class);
+                            //startActivity(take);
                         }
                     }
                     else if (user == null) {
