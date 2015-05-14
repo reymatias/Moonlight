@@ -172,7 +172,5 @@ public class RegisterActivity extends ActionBarActivity {
 
             }
         });
-
-
     }
 }

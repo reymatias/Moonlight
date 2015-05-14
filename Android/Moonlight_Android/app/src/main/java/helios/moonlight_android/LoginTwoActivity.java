@@ -9,7 +9,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.People.LoadPeopleResult;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -29,28 +28,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import com.parse.LogInCallback;
 import com.parse.Parse;
@@ -141,14 +124,13 @@ public class LoginTwoActivity extends FragmentActivity implements
     private ArrayAdapter<String> mCirclesAdapter;
     private ArrayList<String> mCirclesList;
 
-    @InjectView(R.id.mapButton)
+    @InjectView(R.id.menuButton)
     Button mMapButton;
     @InjectView(R.id.sign_in_button)
     SignInButton mSignInButton;
     @InjectView(R.id.sign_out_button)
     Button mSignOutButton;
-    @InjectView(R.id.revoke_access_button)
-    Button mRevokeButton;
+
     @InjectView(R.id.sign_in_status)
     TextView mStatus;
     @InjectView(R.id.circles_list)
@@ -171,8 +153,9 @@ public class LoginTwoActivity extends FragmentActivity implements
         // Button listeners
         mSignInButton.setOnClickListener(this);
         mSignOutButton.setOnClickListener(this);
-        mRevokeButton.setOnClickListener(this);
+        //mRevokeButton.setOnClickListener(this);
         mMapButton.setOnClickListener(this);
+
 
         // CheckBox listeners
         //((CheckBox) findViewById(R.id.request_auth_code_checkbox)).setOnCheckedChangeListener(this);
@@ -254,19 +237,19 @@ public class LoginTwoActivity extends FragmentActivity implements
                     }
                     onSignedOut();
                     break;
-                case R.id.revoke_access_button:
-                    // After we revoke permissions for the user with a GoogleApiClient
-                    // instance, we must discard it and create a new one.
-                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                    // Our sample has caches no user data from Google+, however we
-                    // would normally register a callback on revokeAccessAndDisconnect
-                    // to delete user data so that we comply with Google developer
-                    // policies.
-                    Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
-                    mGoogleApiClient = buildGoogleApiClient();
-                    mGoogleApiClient.connect();
-                    break;
-                case R.id.mapButton:
+//                case R.id.revoke_access_button:
+//                    // After we revoke permissions for the user with a GoogleApiClient
+//                    // instance, we must discard it and create a new one.
+//                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//                    // Our sample has caches no user data from Google+, however we
+//                    // would normally register a callback on revokeAccessAndDisconnect
+//                    // to delete user data so that we comply with Google developer
+//                    // policies.
+//                    Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
+//                    mGoogleApiClient = buildGoogleApiClient();
+//                    mGoogleApiClient.connect();
+//                    break;
+                case R.id.menuButton:
                     //Display the map with the current location and bikes lost nearby
                     Intent intent = new Intent(this, MenuActivity.class);
                     startActivity(intent);
@@ -308,7 +291,7 @@ public class LoginTwoActivity extends FragmentActivity implements
         // Update the user interface to reflect that the user is signed in.
         mSignInButton.setEnabled(false);
         mSignOutButton.setEnabled(true);
-        mRevokeButton.setEnabled(true);
+        //mRevokeButton.setEnabled(true);
         mMapButton.setEnabled(true);
 
 
@@ -538,7 +521,7 @@ public class LoginTwoActivity extends FragmentActivity implements
         // Update the UI to reflect that the user is signed out.
         mSignInButton.setEnabled(true);
         mSignOutButton.setEnabled(false);
-        mRevokeButton.setEnabled(false);
+        //mRevokeButton.setEnabled(false);
         mMapButton.setEnabled(false);
 
         // Show the sign-in options
