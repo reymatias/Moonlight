@@ -91,9 +91,9 @@ public class StolenListActivity extends ActionBarActivity {
                         .getText().toString();
 
                 //Starting single contact activity
-                Intent in = new Intent(getApplicationContext(), LoginTwoActivity.class);
+                Intent in = new Intent(getApplicationContext(), DetailActivity.class);
                 in.putExtra(TAG_TITLE, title);
-                //in.putExtra(TAG_ID, bike_id);
+                in.putExtra(TAG_ID, bike_id);
                 //in.getStringExtra(TAG_ID);
                 //Log.d(TAG, in.getStringExtra(TAG_ID));
                 in.putExtra(TAG_STOLEN_LOCATION, stolen_location);
