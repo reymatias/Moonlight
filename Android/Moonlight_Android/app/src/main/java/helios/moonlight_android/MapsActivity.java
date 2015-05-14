@@ -86,6 +86,7 @@ public class MapsActivity extends ActionBarActivity {
          ButterKnife.inject(this);
 
          setUpMapIfNeeded();
+         Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
 
          mProgressBarMaps.setVisibility(View.INVISIBLE);
 
