@@ -43,17 +43,28 @@ public class RegisterActivity extends ActionBarActivity {
     protected TextView profile_upload;
     protected Button profile_submit;*/
 
-    @InjectView(R.id.profile_name)EditText mprofile_name;
-    @InjectView(R.id.profile_email)TextView mprofile_email;
-    @InjectView(R.id.profile_make)EditText mprofile_make;
-    @InjectView(R.id.profile_model)EditText mprofile_model;
-    @InjectView(R.id.profile_year)EditText mprofile_year;
-    @InjectView(R.id.profile_serial)EditText mprofile_serial;
-    @InjectView(R.id.profile_colors)EditText mprofile_colors;
-    @InjectView(R.id.profile_notes)EditText mprofile_notes;
-    @InjectView(R.id.profile_upload)TextView mprofile_upload;
-    @InjectView(R.id.profile_submit)Button mprofile_submit;
-    @InjectView(R.id.profile_snap)ImageButton mprofile_snap;
+    @InjectView(R.id.profile_name)
+    EditText mprofile_name;
+    @InjectView(R.id.profile_email)
+    TextView mprofile_email;
+    @InjectView(R.id.profile_make)
+    EditText mprofile_make;
+    @InjectView(R.id.profile_model)
+    EditText mprofile_model;
+    @InjectView(R.id.profile_year)
+    EditText mprofile_year;
+    @InjectView(R.id.profile_serial)
+    EditText mprofile_serial;
+    @InjectView(R.id.profile_colors)
+    EditText mprofile_colors;
+/*    @InjectView(R.id.profile_notes)
+    EditText mprofile_notes;*/
+    @InjectView(R.id.profile_upload)
+    TextView mprofile_upload;
+    @InjectView(R.id.profile_submit)
+    Button mprofile_submit;
+    @InjectView(R.id.profile_snap)
+    ImageButton mprofile_snap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +91,13 @@ public class RegisterActivity extends ActionBarActivity {
                     Log.d("Email", "Retrieved " + profile.getString("Email"));
                     //String name = result.getString("Name");
 
-                    mprofile_name.setText(profile.getString("Name"));
-                    mprofile_make.setText(profile.getString("Make"));
-                    mprofile_model.setText(profile.getString("Model"));
-                    mprofile_year.setText(profile.getString("Year"));
-                    mprofile_serial.setText(profile.getString("Serial"));
-                    mprofile_colors.setText(profile.getString("Color"));
-                    mprofile_notes.setText(profile.getString("Notes"));
+                    mprofile_name.setText(profile.getString("title"));
+                    mprofile_make.setText(profile.getString("manufacturer_name"));
+                    mprofile_model.setText(profile.getString("frame_model"));
+                    mprofile_year.setText(profile.getString("year"));
+                    mprofile_serial.setText(profile.getString("serial"));
+                    mprofile_colors.setText(profile.getString("frame_colors"));
+                    //mprofile_notes.setText(profile.getString("Notes"));
                 } else {
                     Log.d("Email", "Error: No info given!" + e.getMessage());
                 }
@@ -111,49 +122,56 @@ public class RegisterActivity extends ActionBarActivity {
                 final String year = mprofile_year.getText().toString().trim();
                 final String serial = mprofile_serial.getText().toString().trim();
                 final String colors = mprofile_colors.getText().toString().trim();
-                final String notes = mprofile_notes.getText().toString().trim();
+//                final String notes = mprofile_notes.getText().toString().trim();
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
-                query.whereEqualTo("Email", email);
-                query.getFirstInBackground(new GetCallback<ParseObject>() {
-                    public void done(ParseObject profile, ParseException e) {
-                        if (e == null) {
-                            Log.d("ACC", "Updating " + profile.getString("Email"));
-                            //String name = result.getString("Name");
+                if(name.length() == 0 || make.length() == 0 || model.length() == 0 || year.length() == 0 || serial.length() == 0 || colors.length() == 0 ){
+                    Toast.makeText(RegisterActivity.this, "Please fill in all fields!!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
+                    query.whereEqualTo("Email", email);
+                    query.getFirstInBackground(new GetCallback<ParseObject>() {
+                        public void done(ParseObject profile, ParseException e) {
+                            if (e == null) {
+                                Log.d("ACC", "Updating " + profile.getString("Email"));
+                                //String name = result.getString("Name");
 
-                            profile.put("Name", name);
-                            profile.put("Email", email);
-                            profile.put("Make", make);
-                            profile.put("Model", model);
-                            profile.put("Year", year);
-                            profile.put("Serial", serial);
-                            profile.put("Color", colors);
-                            profile.put("Notes", notes);
-                            profile.put("OwnerID", relationID);
-                            profile.saveInBackground();
-                        } else {
-                            Log.d("ACC", "Creating New" + e.getMessage());
-                            ParseObject newprofile = new ParseObject("BikeProfile");
-                            newprofile.put("Name", name);
-                            newprofile.put("Email", email);
-                            newprofile.put("Make", make);
-                            newprofile.put("Model", model);
-                            newprofile.put("Year", year);
-                            newprofile.put("Serial", serial);
-                            newprofile.put("Color", colors);
-                            newprofile.put("Notes", notes);
-                            newprofile.put("OwnerID", relationID);
-                            newprofile.saveInBackground();
+                                profile.put("title", name);
+                                profile.put("Email", email);
+                                profile.put("manufacturer_name", make);
+                                profile.put("frame_model", model);
+                                profile.put("year", year);
+                                profile.put("serial", serial);
+                                profile.put("frame_colors", colors);
+                                //profile.put("Notes", notes);
+                                profile.put("OwnerID", relationID);
+                                profile.saveInBackground();
+                            } else {
+                                Log.d("ACC", "Creating New" + e.getMessage());
+                                ParseObject newprofile = new ParseObject("BikeProfile");
+                                newprofile.put("title", name);
+                                newprofile.put("Email", email);
+                                newprofile.put("manufacturer_name", make);
+                                newprofile.put("frame_model", model);
+                                newprofile.put("year", year);
+                                newprofile.put("serial", serial);
+                                newprofile.put("frame_colors", colors);
+                                //newprofile.put("Notes", notes);
+                                newprofile.put("OwnerID", relationID);//generated in parse user
+                                newprofile.saveInBackground();
+                            }
+
                         }
-                    }
-                });
+                    });
+                    //Do this after all check is done correctly
+                    Toast.makeText(RegisterActivity.this, "SAVED!", Toast.LENGTH_LONG).show();
+                    Intent in = new Intent(getApplicationContext(), MenuActivity.class);
+                    startActivity(in);
+                }
 
 
-                Toast.makeText(RegisterActivity.this, "SAVED!", Toast.LENGTH_LONG).show();
             }
         });
-        Intent intent = new Intent(this, NavDrawActivity.class);
-        startActivity(intent);
 
 
     }

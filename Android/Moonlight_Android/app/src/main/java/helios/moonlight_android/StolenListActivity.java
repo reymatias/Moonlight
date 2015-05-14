@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.support.v7.app.ActionBarActivity;
 
 /**
@@ -43,15 +44,19 @@ public class StolenListActivity extends ActionBarActivity {
 
     //private CurrentStolen mCurrentStolen;
 
-    @InjectView(R.id.refreshImageView)ImageView mRefreshImageView;
-    @InjectView(R.id.progressBar)ProgressBar mProgressBar;
-    @InjectView(R.id.list_item)ListView mlist_item;
+    @InjectView(R.id.refreshImageView)
+    ImageView mRefreshImageView;
+    @InjectView(R.id.progressBar)
+    ProgressBar mProgressBar;
+    @InjectView(R.id.list_item)
+    ListView mlist_item;
 
     public static final String TAG = StolenListActivity.class.getSimpleName();
 
     // JSON Node names
     private static final String TAG_BIKES = "bikes";
     private static final String TAG_ID = "id";
+    private static final String TAG_DATA_FROM = "BikeIndex";
     private static final String TAG_TITLE = "title";
     private static final String TAG_SERIAL = "serial";
     private static final String TAG_MANUFACTURER_NAME = "manufacturer_name";
@@ -89,11 +94,15 @@ public class StolenListActivity extends ActionBarActivity {
                         .getText().toString();
                 String bike_id = ((TextView) view.findViewById(R.id.id))
                         .getText().toString();
+                String datafrom = ((TextView) view.findViewById(R.id.datafrom))
+                        .getText().toString();
+
 
                 //Starting single contact activity
                 Intent in = new Intent(getApplicationContext(), DetailActivity.class);
                 in.putExtra(TAG_TITLE, title);
                 in.putExtra(TAG_ID, bike_id);
+                in.putExtra(TAG_DATA_FROM, datafrom);
                 //in.getStringExtra(TAG_ID);
                 //Log.d(TAG, in.getStringExtra(TAG_ID));
                 in.putExtra(TAG_STOLEN_LOCATION, stolen_location);
@@ -187,6 +196,7 @@ public class StolenListActivity extends ActionBarActivity {
                                 HashMap<String, String> contact = new HashMap<String, String>();
 
                                 contact.put(TAG_ID, id);
+                                contact.put(TAG_DATA_FROM, TAG_DATA_FROM);
                                 contact.put(TAG_TITLE, title);
                                 contact.put(TAG_SERIAL, serial);
                                 contact.put(TAG_MANUFACTURER_NAME, manufacturer_name);
@@ -265,8 +275,8 @@ public class StolenListActivity extends ActionBarActivity {
         ListAdapter adapter = new SimpleAdapter(
                 StolenListActivity.this, bikeList,
                 R.layout.list_item, new String[]{TAG_TITLE,
-                TAG_STOLEN_LOCATION,TAG_ID}, new int[]{R.id.title,
-                R.id.stolen_location, R.id.id});
+                TAG_STOLEN_LOCATION, TAG_ID, TAG_DATA_FROM}, new int[]{R.id.title,
+                R.id.stolen_location, R.id.id, R.id.datafrom});
 
 //        setListAdapter(adapter);
         Log.d(TAG, "mlist_item.setAdapter(adapter);");

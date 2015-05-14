@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dip"
         android:paddingTop="6dip"
-        android:textColor="#43bd00"
+        android:textColor="#00ffff"
+
         android:textSize="16sp"
         android:text="Name of Bike: "
         android:textStyle="bold" />
@@ -37,6 +38,15 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:text="ID: "
+        android:textColor="#5d5d5d"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/datafrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="DataFrom"
         android:textColor="#5d5d5d"
         android:textStyle="bold" />
 

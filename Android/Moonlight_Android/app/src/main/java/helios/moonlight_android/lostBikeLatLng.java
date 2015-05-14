@@ -3,9 +3,9 @@ package helios.moonlight_android;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
-  * Created by roshiniThiagarajan on 5/10/15.
-  */
- public class lostBikeLatLng {
+ * Created by roshiniThiagarajan on 5/10/15.
+ */
+public class lostBikeLatLng {
     public String id;
     public LatLng latLng;
 
@@ -25,4 +25,4 @@ import com.google.android.gms.maps.model.LatLng;
         this.latLng = latLng;
     }
 
- }
+}

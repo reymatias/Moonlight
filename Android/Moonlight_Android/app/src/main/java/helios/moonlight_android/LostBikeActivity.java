@@ -44,14 +44,22 @@ import butterknife.InjectView;
 public class LostBikeActivity extends ActionBarActivity {
 
     final static String TAG = LostBikeActivity.class.getSimpleName();
-    @InjectView(R.id.report_stolen_loc_textView)EditText mReportStolenTextView;
-    @InjectView(R.id.currentLoc_checkbox)CheckBox mCurrentLocCheckBox;
-    @InjectView(R.id.email_checkBox) CheckBox mEmailCheckBox;
-    @InjectView(R.id.phone_checkBox) CheckBox mPhoneCheckBox;
-    @InjectView(R.id.report_button) Button mReportButton;
-    @InjectView(R.id.addressTextView)TextView mAddressTextView;
-    @InjectView(R.id.email_id_textView) TextView mEmailIdTextView;
-    @InjectView(R.id.phone_number_textView) TextView mPhoneNumTextView;
+    @InjectView(R.id.report_stolen_loc_textView)
+    EditText mReportStolenTextView;
+    @InjectView(R.id.currentLoc_checkbox)
+    CheckBox mCurrentLocCheckBox;
+    @InjectView(R.id.email_checkBox)
+    CheckBox mEmailCheckBox;
+    @InjectView(R.id.phone_checkBox)
+    CheckBox mPhoneCheckBox;
+    @InjectView(R.id.report_button)
+    Button mReportButton;
+    @InjectView(R.id.addressTextView)
+    TextView mAddressTextView;
+    @InjectView(R.id.email_id_textView)
+    TextView mEmailIdTextView;
+    @InjectView(R.id.phone_number_textView)
+    TextView mPhoneNumTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +78,7 @@ public class LostBikeActivity extends ActionBarActivity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
         //Constrain value, i.e. it is equivalent to "WHERE" in SQL
         query.whereEqualTo("OwnerID", mCurrentUserId);
-        Log.v(TAG, "mCurrentuserId: "+ mCurrentUserId);
-
+        Log.v(TAG, "mCurrentuserId: " + mCurrentUserId);
 
 
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -111,7 +118,7 @@ public class LostBikeActivity extends ActionBarActivity {
 
                     } catch (ParseException e1) {
                         e1.printStackTrace();
-                        Log.v (TAG, "Report was not submitted. Please try Again.");
+                        Log.v(TAG, "Report was not submitted. Please try Again.");
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                                 LostBikeActivity.this);
                         alertDialog.setTitle("Oops");
@@ -136,10 +143,9 @@ public class LostBikeActivity extends ActionBarActivity {
                     mCurrentLocCheckBox.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (mCurrentLocCheckBox.isChecked()){
+                            if (mCurrentLocCheckBox.isChecked()) {
                                 getCurrentLocation();
-                            }
-                            else{
+                            } else {
                                 mAddressTextView.setText("");
                             }
 
@@ -158,15 +164,14 @@ public class LostBikeActivity extends ActionBarActivity {
                             String bikeTitle = parseObject.getString("Name");
 
                             //Check Checkboxes
-                            if(mCurrentLocCheckBox.isChecked()){
+                            if (mCurrentLocCheckBox.isChecked()) {
                                 address = String.valueOf(mAddressTextView.getText());
-                                Log.v(TAG, "current location address is: "+ address);
+                                Log.v(TAG, "current location address is: " + address);
                                 latLng = convertAddress(address);
                                 latitude = latLng.latitude;
                                 longitude = latLng.longitude;
 
-                            }
-                            else{
+                            } else {
                                 //Get address input from user
                                 address = mReportStolenTextView.getText().toString();
                                 latLng = convertAddress(address);
@@ -177,19 +182,19 @@ public class LostBikeActivity extends ActionBarActivity {
                             ParseObject newStolenBike = new ParseObject("StolenList");
                             newStolenBike.put("BikeId", bikeId);
                             newStolenBike.put("title", bikeTitle);
-                            newStolenBike.put("latitude",latitude);
+                            newStolenBike.put("latitude", latitude);
                             newStolenBike.put("longitude", longitude);
 
-                            if (mEmailCheckBox.isChecked()){
+                            if (mEmailCheckBox.isChecked()) {
                                 newStolenBike.put("Email", "true");
                             }
 
-                            if(mPhoneCheckBox.isChecked()){
+                            if (mPhoneCheckBox.isChecked()) {
                                 newStolenBike.put("Phone", "true");
                             }
 
                             Log.v(TAG, bikeTitle);
-                            Log.v(TAG, latitude +" , "+ longitude);
+                            Log.v(TAG, latitude + " , " + longitude);
                             try {
                                 newStolenBike.save();
 
@@ -271,7 +276,7 @@ public class LostBikeActivity extends ActionBarActivity {
                 if (addressList != null && addressList.size() > 0) {
                     double lat = addressList.get(0).getLatitude();
                     double lng = addressList.get(0).getLongitude();
-                    Log.v(TAG, "lat: "+lat + " lng: " +lng);
+                    Log.v(TAG, "lat: " + lat + " lng: " + lng);
                     return (new LatLng(lat, lng));
                 }
             } catch (Exception e) {

@@ -268,7 +268,7 @@ public class LoginTwoActivity extends FragmentActivity implements
                     break;
                 case R.id.mapButton:
                     //Display the map with the current location and bikes lost nearby
-                    Intent intent = new Intent(this,MenuActivity.class);
+                    Intent intent = new Intent(this, MenuActivity.class);
                     startActivity(intent);
             }
         }
@@ -313,7 +313,7 @@ public class LoginTwoActivity extends FragmentActivity implements
 
 
         //if(mSignInProgress == STATE_DEFAULT){
-           //navigateToNavDraw();
+        //navigateToNavDraw();
         //}
 
 
@@ -386,14 +386,12 @@ public class LoginTwoActivity extends FragmentActivity implements
                             Toast.makeText(LoginTwoActivity.this, "FirstTimer!", Toast.LENGTH_LONG).show();
                             Intent takeToLogin = new Intent(LoginTwoActivity.this, RegisterActivity.class);
                             startActivity(takeToLogin);
-                        }
-                        else {//false
+                        } else {//false
                             Toast.makeText(LoginTwoActivity.this, "NotFirstTimer!", Toast.LENGTH_LONG).show();
                             //Intent take = new Intent(LoginTwoActivity.this, StolenListActivity.class);
                             //startActivity(take);
                         }
-                    }
-                    else if (user == null) {
+                    } else if (user == null) {
                         Toast.makeText(LoginTwoActivity.this, "Please try login again!!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(LoginTwoActivity.this, "somethingWentWrong!", Toast.LENGTH_LONG).show();

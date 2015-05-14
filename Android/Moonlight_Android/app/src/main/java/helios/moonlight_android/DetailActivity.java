@@ -65,8 +65,8 @@ public class DetailActivity extends ActionBarActivity {
     TextView mstolen_location;
     @InjectView(R.id.Locking_description)
     TextView mlocking_description;
-/*    @InjectView(R.id.Locking_circumvented)
-    TextView mlist_item;*/
+    /*    @InjectView(R.id.Locking_circumvented)
+        TextView mlist_item;*/
     @InjectView(R.id.Date_stolen)
     TextView mdate_stolen;
     @InjectView(R.id.Description)
@@ -224,7 +224,7 @@ public class DetailActivity extends ActionBarActivity {
 
                             for (int i = 0; i < all_frame_color.size(); i++) {
                                 frame_color += all_frame_color.get(i);
-                                if ( i == all_frame_color.size()-1 )
+                                if (i == all_frame_color.size() - 1)
                                     frame_color += " ";
                                 else
                                     frame_color += ", ";
@@ -264,7 +264,8 @@ public class DetailActivity extends ActionBarActivity {
                                     mpolice_report_number.setText("Police Report Number: " + police_report_number);
                                     mpolice_report_department.setText("Police Report Department: " + police_report_department);
                                     Log.i(TAG, large_img);
-                                    Picasso.with(DetailActivity.getAppContext()).load(large_img).into(mBikeImage);
+                                    //Picasso.with(DetailActivity.getAppContext()).load(large_img).into(mBikeImage);
+                                    Picasso.with(getApplicationContext()).load(large_img).into(mBikeImage);
                                 }
 
                             });

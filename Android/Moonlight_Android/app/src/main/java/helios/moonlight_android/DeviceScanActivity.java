@@ -138,7 +138,6 @@ public class DeviceScanActivity extends ListActivity {
         }
 
 
-
         startActivity(intent);
         // startActivity(new_intent); // Return to connection screen
     }
@@ -175,7 +174,7 @@ public class DeviceScanActivity extends ListActivity {
         }
 
         public void addDevice(BluetoothDevice device) {
-            if(!mLeDevices.contains(device)) {
+            if (!mLeDevices.contains(device)) {
                 mLeDevices.add(device);
             }
         }
