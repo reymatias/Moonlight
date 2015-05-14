@@ -268,7 +268,7 @@ public class LoginTwoActivity extends FragmentActivity implements
                     break;
                 case R.id.mapButton:
                     //Display the map with the current location and bikes lost nearby
-                    Intent intent = new Intent(this,NavDrawActivity.class);
+                    Intent intent = new Intent(this,MenuActivity.class);
                     startActivity(intent);
             }
         }
