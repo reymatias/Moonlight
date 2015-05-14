@@ -36,7 +36,7 @@
             android:textSize="25dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="70dp" />
 
         <CheckBox
             android:layout_width="wrap_content"

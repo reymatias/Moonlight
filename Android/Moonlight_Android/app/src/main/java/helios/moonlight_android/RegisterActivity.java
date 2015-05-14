@@ -152,7 +152,7 @@ public class RegisterActivity extends ActionBarActivity {
                 Toast.makeText(RegisterActivity.this, "SAVED!", Toast.LENGTH_LONG).show();
             }
         });
-        Intent intent = new Intent(this, NavDrawActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
 
 

@@ -1,14 +1,16 @@
 package helios.moonlight_android;
 
 import android.app.AlertDialog;
- import android.content.Context;
+import android.app.Dialog;
+import android.content.Context;
  import android.content.DialogInterface;
  import android.content.Intent;
  import android.location.Location;
  import android.location.LocationManager;
  import android.net.ConnectivityManager;
  import android.net.NetworkInfo;
- import android.os.Handler;
+import android.nfc.Tag;
+import android.os.Handler;
  import android.os.Message;
  import android.provider.Settings;
  import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.app.AlertDialog;
  import com.google.android.gms.maps.model.LatLng;
  import com.google.android.gms.maps.model.Marker;
  import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -140,6 +143,69 @@ public class MapsActivity extends ActionBarActivity {
                      mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                      mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 6));
 
+                     //Get Data from Parse
+                     ParseQuery<ParseObject> query = ParseQuery.getQuery("StolenList");
+                     Log.v(TAG, "Query returns: "+ query);
+                     query.findInBackground(new FindCallback<ParseObject>() {
+                         @Override
+                         public void done(List<ParseObject> parseObjects, ParseException e) {
+                             if(parseObjects == null){
+                                 Log.d("score", "The getFirst request failed.");
+                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                                         MapsActivity.this);
+                                 alertDialog.setTitle("Oops");
+                                 alertDialog.setMessage("Parse Database is not connected");
+                                 alertDialog.setPositiveButton("Ok",
+                                         new DialogInterface.OnClickListener() {
+                                             public void onClick(DialogInterface dialog, int which) {
+
+                                             }
+                                         });
+                                 alertDialog.setNegativeButton("Cancel",
+                                         new DialogInterface.OnClickListener() {
+                                             public void onClick(DialogInterface dialog, int which) {
+                                                 dialog.cancel();
+                                             }
+                                         });
+                                 alertDialog.show();
+                             }
+                             else {
+                                 for (int i = 0; i < parseObjects.size(); i++){
+                                     Log.i(TAG, "Displaying Markers");
+
+                                     String bikeId = parseObjects.get(i).getString("BikeId");
+                                     String bikeTitle = parseObjects.get(i).getString("title");
+                                     Double currLat = (Double) parseObjects.get(i).getNumber("latitude");
+                                     Double currLng = (Double) parseObjects.get(i).getNumber("longitude");
+
+                                     Log.v(TAG, "BikeId: " + bikeId);
+                                     Log.v(TAG, "Title: " + bikeTitle);
+                                     Log.v(TAG, "Latitude: " + currLat);
+                                     Log.v(TAG, "Lng: " + currLng);
+
+                                     LatLng lostBikeLatLng = new LatLng(currLat, currLng);
+
+                                     Marker marker = mMap.addMarker(new MarkerOptions()
+                                                     .position(lostBikeLatLng)
+                                                     .title(bikeTitle + ", " + bikeId)
+                                     );
+                                     mMarkers.add(marker);
+                                     Log.v(TAG, "PARSE: Markers size(should increase): " + mMarkers.size());
+                                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                         @Override
+                                         public boolean onMarkerClick(Marker marker) {
+                                             locationAddress.getAddressFromLocation(marker.getPosition().latitude, marker.getPosition().longitude,
+                                                     getApplicationContext(), new GeocoderHandler());
+                                             //marker.setSnippet(String.valueOf(mAddressTextView.getText()));
+                                             Log.i(TAG, String.valueOf(mAddressTextView.getText()));
+                                             marker.showInfoWindow();
+                                             return false;
+                                         }
+                                     });
+                                 }
+                             }
+                         }
+                     });
                  } else {
                      showSettingsAlert();
                  }
