@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <EditText
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/profile_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/profile_make"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_name"
+        android:layout_marginTop="35dp"
+        android:ems="10"
+        android:hint="@string/profile_make"
+        android:inputType="text" />
+
+
+    <EditText
+        android:id="@+id/profile_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_make"
+        android:ems="10"
+        android:hint="@string/profile_model"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/profile_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_model"
+        android:ems="10"
+        android:hint="@string/profile_year"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/profile_serial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_year"
+        android:ems="10"
+        android:hint="@string/profile_serial"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/profile_colors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_serial"
+        android:ems="10"
+        android:hint="@string/profile_colors" />
+
+    <!--    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_notes"
+            android:hint="@string/profile_notes"
+            android:layout_below="@+id/profile_colors"
+            android:layout_alignParentStart="true"
+            android:ems="10"/>-->
+
+    <TextView
+        android:id="@+id/profile_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_colors"
+        android:text="@string/profile_upload"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageButton
+        android:id="@+id/profile_snap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/profile_submit"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/profile_upload"
+        android:layout_toEndOf="@+id/profile_colors" />
+
+    <Button
+        android:id="@+id/profile_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_submit"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/profile_upload" />
+
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/profile_name"
+        android:hint="Email"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/Found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Found"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/profile_submit" />
+</RelativeLayout>

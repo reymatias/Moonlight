@@ -12,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -60,7 +65,7 @@ public class DetailActivity extends ActionBarActivity {
     //@InjectView(R.id.Wheel_diameter)TextView mlist_item;
     @InjectView(R.id.Primary_colors)
     TextView mframe_colors;
-    //@InjectView(R.id.Phone_number)TextView mlist_item;
+    @InjectView(R.id.Phone_number)TextView mphone_number;
     @InjectView(R.id.Location)
     TextView mstolen_location;
     @InjectView(R.id.Locking_description)
@@ -109,6 +114,7 @@ public class DetailActivity extends ActionBarActivity {
     private static final String TAG_LOCK_DEFEAT_DESCRIPTION = "lock_defeat_description";
     private static final String TAG_POLICE_REPORT_NUMBER = "police_report_number";
     private static final String TAG_POLICE_REPORT_DEPARTMENT = "police_report_department";
+    private static final String TAG_DATA_FROM = "BikeIndex";
     //private static final String TAG_LIST_ITEM = "list_item";
     //String large_img = "a";
 
@@ -132,162 +138,224 @@ public class DetailActivity extends ActionBarActivity {
 
     private void getStolenBikeDetail() {
         Intent intent = getIntent();
-        String id = intent.getStringExtra(TAG_ID);
-        String title = intent.getStringExtra(TAG_TITLE);
-/*        mid.setText(id);
-        mtitle.setText(title);*/
-        //String = in.getStringExtra(TAG_ID);
-        String bikeindexURL = "https://bikeindex.org/api/v2/bikes/" + id;
-        Log.i(TAG, bikeindexURL);
+        final String id = intent.getStringExtra(TAG_ID);
+        final String title = intent.getStringExtra(TAG_TITLE);
+        String datafrom = intent.getStringExtra(TAG_DATA_FROM);
+        Log.d(TAG, datafrom);
+        String stolen_location = intent.getStringExtra(TAG_STOLEN_LOCATION);
 
-        if (isNetworkAvailable()) {
-            //toggleRefresh();
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(bikeindexURL).build();
 
-            Call call = client.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //toggleRefresh();
-                        }
-                    });
-                    Log.d(TAG, "alertUserAboutError();");
-                }
+        if (datafrom.contentEquals("Moonlight")) {
+            Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
 
-                @Override
-                public void onResponse(Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //toggleRefresh();
-                        }
-                    });
+            Log.d(TAG, "Moonlight();");
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
+            query.whereEqualTo("title", title);
+            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                public void done(ParseObject profile, ParseException e) {
+                    if (e == null) {
+                        Log.d("Email", "Retrieved " + profile.getString("Email"));
+                        //String name = result.getString("Name");
 
-                    try {
-                        String jsonData = response.body().string();
-                        Log.v(TAG, jsonData);
+                     //title = profile.getString("title"));
+                        final String manufacturer_name = profile.getString("manufacturer_name");
+                        final String frame_model = profile.getString("frame_model");
+                        final String year = profile.getString("year");
+                        final String serial = profile.getString("serial");
+                        final String frame_colors = profile.getString("frame_colors");
+                        final String stolen_address = profile.getString("Stolen_Address");
 
-                        //Response response = call.execute(); SYNCHRONOUS METHOD
-                        if (response.isSuccessful()) {
-                            Log.d(TAG, "isSuccessful();");
 
-                            JSONObject bike = new JSONObject(jsonData);
+                        //mprofile_notes.setText(profile.getString("Notes"));
 
-                            String bikeDetails = bike.getString(TAG_BIKES);
-                            JSONObject c = new JSONObject(bikeDetails);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, "updateDisplay();");
 
-                            //for (int i = 0; i < bikes.length(); i++) {
-                            //JSONObject c = bikes.getJSONObject(i);
+                                mtitle.setText(title);
+                                mid.setText("ID: " + id);
+                                mmanufacturer_name.setText("Manufacturer: " + manufacturer_name);
+                                mframe_model.setText("Model: " + frame_model);
+                                myear.setText("Year: " + year);
+                                mframe_colors.setText("Color: " + frame_colors);
+                                mserial.setText("Serial: " + serial);
 
-                            final String id = c.getString(TAG_ID);
-                            final String title = c.getString(TAG_TITLE);
-                            final String serial = c.getString(TAG_SERIAL);
-                            final String manufacturer_name = c.getString(TAG_MANUFACTURER_NAME);
-                            final String frame_model = c.getString(TAG_FRAME_MODEL);
-                            final String year = c.getString(TAG_YEAR);
+                                mstolen_location.setText("Last Location Seen: " + stolen_address);
 
-                            JSONArray colors = c.getJSONArray(TAG_FRAME_COLORS);
-                            Vector<String> all_frame_color = new Vector<>();
-                            for (int i = 0; i < colors.length(); i++) {
-                                String frame_color = colors.getString(i);
-                                all_frame_color.add(frame_color);
+                                mphone_number.setText("");
+                                mframe_size.setText("");
+                                mframe_material_slug.setText("");
+                                mhandlebar_type_slug.setText("");
+                                mlocking_description.setText("");
+                                mdate_stolen.setText("");
+                                mtheft_description.setText("");
+                                mpolice_report_number.setText("");
+                                mpolice_report_department.setText("");
                             }
 
-                            //String thumb = c.getString(TAG_THUMB);
-                            final String large_img = c.getString(TAG_LARGE_IMG);
-                            //String is_stock_img = c.getString(TAG_IS_STOCK_IMG);
-                            String stolen = c.getString(TAG_STOLEN);
-                            String stolen_location = c.getString(TAG_STOLEN_LOCATION);
-                            final String date_stolen = c.getString(TAG_DATE_STOLEN);
-                            final String frame_size = c.getString(TAG_FRAME_SIZE);
-                            final String handlebar_type_slug = c.getString(TAG_HANDLEBAR_TYPE_SLUG);
-                            final String frame_material_slug = c.getString(TAG_FRAME_MATERIAL_SLUG);
-
-                            String stolenDetails = c.getString(TAG_STOLEN_RECORD);
-                            JSONObject stolen_record = new JSONObject(stolenDetails);
-                            //JSONObject stolen_record = c.getJSONObject(TAG_STOLEN_RECORD);
-                            final String location = stolen_record.getString(TAG_LOCATION);
-                            String latitude = stolen_record.getString(TAG_LATITUDE);
-                            String longitude = stolen_record.getString(TAG_LONGITUDE);
-                            //final String list_item = stolen_record.getString(TAG_LIST_ITEM);
-                            //String date_stolen = stolen_record.getString(TAG_DATE_STOLEN);
-                            final String theft_description = stolen_record.getString(TAG_THEFT_DESCRIPTION);
-                            final String locking_description = stolen_record.getString(TAG_LOCKING_DESCRIPTION);
-                            String lock_defeat_description = stolen_record.getString(TAG_LOCK_DEFEAT_DESCRIPTION);
-                            final String police_report_number = stolen_record.getString(TAG_POLICE_REPORT_NUMBER);
-                            final String police_report_department = stolen_record.getString(TAG_POLICE_REPORT_DEPARTMENT);
-                            String frame_color = "";
-
-                            for (int i = 0; i < all_frame_color.size(); i++) {
-                                frame_color += all_frame_color.get(i);
-                                if (i == all_frame_color.size() - 1)
-                                    frame_color += " ";
-                                else
-                                    frame_color += ", ";
-                            }
-
-                            //mCurrentStolen = getCurrentDetails(jsonData);
-                            //Let main UI thread know that data is available from http request
-                            final String finalFrame_color = frame_color;
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.d(TAG, "updateDisplay();");
-                                    //updateDisplay();
-                                    //toggleRefresh();
-                                    //Refresh button does not work properly until these
-                                    //two lines are added
-                                    //mProgressBar.setVisibility(View.INVISIBLE);
-                                    //mRefreshImageView.setVisibility(View.VISIBLE);
-                                    mtitle.setText(title);
-                                    mid.setText("ID: " + id);
-                                    mserial.setText("Serial: " + serial);
-                                    mmanufacturer_name.setText("Manufacturer: " + manufacturer_name);
-                                    mframe_model.setText("Model: " + frame_model);
-                                    myear.setText("Year: " + year);
-                                    mframe_colors.setText("Color: " + finalFrame_color);
-                                    //stolen
-                                    mframe_size.setText("Frame Size: " + frame_size);
-                                    mframe_material_slug.setText("Frame Material: " + frame_material_slug);
-                                    mhandlebar_type_slug.setText("Handlebar Type: " + handlebar_type_slug);
-
-                                    mstolen_location.setText("Last Location Seen: " + location);
-                                    mlocking_description.setText("Locking Description: " + locking_description);
-                                    //mlist_item.setText(list_item);
-                                    mdate_stolen.setText("Date Stolen: " + date_stolen);
-                                    mtheft_description.setText("Theft Description: " + theft_description);
-                                    mpolice_report_number.setText("Police Report Number: " + police_report_number);
-                                    mpolice_report_department.setText("Police Report Department: " + police_report_department);
-                                    Log.i(TAG, large_img);
-                                    //Picasso.with(DetailActivity.getAppContext()).load(large_img).into(mBikeImage);
-                                    Picasso.with(getApplicationContext()).load(large_img).into(mBikeImage);
-                                }
-
-                            });
-                        } else {
-                            Log.d(TAG, "alertUserAboutError();");
-                        }
-
-                    } catch (IOException e) {
-                        Log.e(TAG, "Exception caught: ", e);
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Exception caught: ", e);
+                        });
+                    } else {
+                        Log.d("Email", "Error: No info given!" + e.getMessage());
                     }
-
                 }
-
             });
 
+
+
         } else {
-            Toast.makeText(this, "Unavailable", Toast.LENGTH_LONG).show();
+            String bikeindexURL = "https://bikeindex.org/api/v2/bikes/" + id;
+            Log.i(TAG, bikeindexURL);
 
+            if (isNetworkAvailable()) {
+                //toggleRefresh();
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder().url(bikeindexURL).build();
+
+                Call call = client.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //toggleRefresh();
+                            }
+                        });
+                        Log.d(TAG, "alertUserAboutError();");
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //toggleRefresh();
+                            }
+                        });
+
+                        try {
+                            String jsonData = response.body().string();
+                            Log.v(TAG, jsonData);
+
+                            //Response response = call.execute(); SYNCHRONOUS METHOD
+                            if (response.isSuccessful()) {
+                                Log.d(TAG, "isSuccessful();");
+
+                                JSONObject bike = new JSONObject(jsonData);
+
+                                String bikeDetails = bike.getString(TAG_BIKES);
+                                JSONObject c = new JSONObject(bikeDetails);
+
+                                //for (int i = 0; i < bikes.length(); i++) {
+                                //JSONObject c = bikes.getJSONObject(i);
+
+                                final String id = c.getString(TAG_ID);
+                                final String title = c.getString(TAG_TITLE);
+                                final String serial = c.getString(TAG_SERIAL);
+                                final String manufacturer_name = c.getString(TAG_MANUFACTURER_NAME);
+                                final String frame_model = c.getString(TAG_FRAME_MODEL);
+                                final String year = c.getString(TAG_YEAR);
+
+                                JSONArray colors = c.getJSONArray(TAG_FRAME_COLORS);
+                                Vector<String> all_frame_color = new Vector<>();
+                                for (int i = 0; i < colors.length(); i++) {
+                                    String frame_color = colors.getString(i);
+                                    all_frame_color.add(frame_color);
+                                }
+
+                                //String thumb = c.getString(TAG_THUMB);
+                                final String large_img = c.getString(TAG_LARGE_IMG);
+                                //String is_stock_img = c.getString(TAG_IS_STOCK_IMG);
+                                String stolen = c.getString(TAG_STOLEN);
+                                String stolen_location = c.getString(TAG_STOLEN_LOCATION);
+                                final String date_stolen = c.getString(TAG_DATE_STOLEN);
+                                final String frame_size = c.getString(TAG_FRAME_SIZE);
+                                final String handlebar_type_slug = c.getString(TAG_HANDLEBAR_TYPE_SLUG);
+                                final String frame_material_slug = c.getString(TAG_FRAME_MATERIAL_SLUG);
+
+                                String stolenDetails = c.getString(TAG_STOLEN_RECORD);
+                                JSONObject stolen_record = new JSONObject(stolenDetails);
+                                //JSONObject stolen_record = c.getJSONObject(TAG_STOLEN_RECORD);
+                                final String location = stolen_record.getString(TAG_LOCATION);
+                                String latitude = stolen_record.getString(TAG_LATITUDE);
+                                String longitude = stolen_record.getString(TAG_LONGITUDE);
+                                //final String list_item = stolen_record.getString(TAG_LIST_ITEM);
+                                //String date_stolen = stolen_record.getString(TAG_DATE_STOLEN);
+                                final String theft_description = stolen_record.getString(TAG_THEFT_DESCRIPTION);
+                                final String locking_description = stolen_record.getString(TAG_LOCKING_DESCRIPTION);
+                                String lock_defeat_description = stolen_record.getString(TAG_LOCK_DEFEAT_DESCRIPTION);
+                                final String police_report_number = stolen_record.getString(TAG_POLICE_REPORT_NUMBER);
+                                final String police_report_department = stolen_record.getString(TAG_POLICE_REPORT_DEPARTMENT);
+                                String frame_color = "";
+
+                                for (int i = 0; i < all_frame_color.size(); i++) {
+                                    frame_color += all_frame_color.get(i);
+                                    if (i == all_frame_color.size() - 1)
+                                        frame_color += " ";
+                                    else
+                                        frame_color += ", ";
+                                }
+
+                                //mCurrentStolen = getCurrentDetails(jsonData);
+                                //Let main UI thread know that data is available from http request
+                                final String finalFrame_color = frame_color;
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.d(TAG, "updateDisplay();");
+                                        //updateDisplay();
+                                        //toggleRefresh();
+                                        //Refresh button does not work properly until these
+                                        //two lines are added
+                                        //mProgressBar.setVisibility(View.INVISIBLE);
+                                        //mRefreshImageView.setVisibility(View.VISIBLE);
+                                        mtitle.setText(title);
+                                        mid.setText("ID: " + id);
+                                        mserial.setText("Serial: " + serial);
+                                        mmanufacturer_name.setText("Manufacturer: " + manufacturer_name);
+                                        mframe_model.setText("Model: " + frame_model);
+                                        myear.setText("Year: " + year);
+                                        mframe_colors.setText("Color: " + finalFrame_color);
+                                        //stolen
+                                        mframe_size.setText("Frame Size: " + frame_size);
+                                        mframe_material_slug.setText("Frame Material: " + frame_material_slug);
+                                        mhandlebar_type_slug.setText("Handlebar Type: " + handlebar_type_slug);
+
+                                        mphone_number.setText("");
+                                        mstolen_location.setText("Last Location Seen: " + location);
+                                        mlocking_description.setText("Locking Description: " + locking_description);
+                                        //mlist_item.setText(list_item);
+                                        mdate_stolen.setText("Date Stolen: " + date_stolen);
+                                        mtheft_description.setText("Theft Description: " + theft_description);
+                                        mpolice_report_number.setText("Police Report Number: " + police_report_number);
+                                        mpolice_report_department.setText("Police Report Department: " + police_report_department);
+                                        Log.i(TAG, large_img);
+                                        //Picasso.with(DetailActivity.getAppContext()).load(large_img).into(mBikeImage);
+                                        Picasso.with(getApplicationContext()).load(large_img).into(mBikeImage);
+                                    }
+
+                                });
+                            } else {
+                                Log.d(TAG, "alertUserAboutError();");
+                            }
+
+                        } catch (IOException e) {
+                            Log.e(TAG, "Exception caught: ", e);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Exception caught: ", e);
+                        }
+
+                    }
+
+                });
+
+            } else {
+                Toast.makeText(this, "Unavailable", Toast.LENGTH_LONG).show();
+
+            }
         }
-
     }
 
 

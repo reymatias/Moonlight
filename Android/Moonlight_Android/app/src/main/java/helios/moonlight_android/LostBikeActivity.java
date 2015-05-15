@@ -72,10 +72,10 @@ public class LostBikeActivity extends ActionBarActivity {
         final ParseUser currentUser = ParseUser.getCurrentUser();
 
 
-        String mCurrentUserId = currentUser.getObjectId();
+        final String mCurrentUserId = currentUser.getObjectId();
         //final String[] phone = {currentUser.getString("Phone")};
         //Log.v(TAG, "phone is: " + phone[0]);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
         //Constrain value, i.e. it is equivalent to "WHERE" in SQL
         query.whereEqualTo("OwnerID", mCurrentUserId);
         Log.v(TAG, "mCurrentuserId: " + mCurrentUserId);
@@ -109,7 +109,8 @@ public class LostBikeActivity extends ActionBarActivity {
                     //Log.v(TAG, "phone is: " + phone[0]);
                     Log.v("score", "Retrieved the object: " + parseObject);
                     Log.v(TAG, "Get status of current bike: " + parseObject.get("Status"));
-                    parseObject.put("Status", "true");
+                    //parseObject.put("Status", "true");
+                    //shouldn't be done here since user didnt press submit
 
                     try {
                         parseObject.save();
@@ -161,12 +162,16 @@ public class LostBikeActivity extends ActionBarActivity {
                             LatLng latLng = null;
                             //Get data from form and from db to fill Stolen List
                             String bikeId = parseObject.getString("OwnerID");
-                            String bikeTitle = parseObject.getString("Name");
+                            String bikeTitle = parseObject.getString("title");
 
                             //Check Checkboxes
                             if (mCurrentLocCheckBox.isChecked()) {
                                 address = String.valueOf(mAddressTextView.getText());
                                 Log.v(TAG, "current location address is: " + address);
+
+                                //Intent needAddress = getIntent();
+                                //needAddress.putExtra("address", address);
+
                                 latLng = convertAddress(address);
                                 latitude = latLng.latitude;
                                 longitude = latLng.longitude;
@@ -193,10 +198,34 @@ public class LostBikeActivity extends ActionBarActivity {
                                 newStolenBike.put("Phone", "true");
                             }
 
+
+                            ParseQuery<ParseObject> query2 = ParseQuery.getQuery("BikeProfile");
+                            query2.whereEqualTo("OwnerID", mCurrentUserId);
+
+                            final String finalAddress = address;
+
+                            query2.getFirstInBackground(new GetCallback<ParseObject>() {
+                                public void done(ParseObject profile, ParseException e) {
+                                    if (e == null) {
+                                        Log.d("Stolen", "Updating " + profile.getString("Email"));
+                                        profile.put("Status", "true");
+                                        profile.put("Stolen_Address", finalAddress);
+
+                                        profile.saveInBackground();
+                                    } else {
+                                        Log.d("Bike", "FAILED " + profile.getString("BikeId"));
+                                        Log.d("Email", "Error: No bike found on profile list!" + e.getMessage());
+                                    }
+
+                                }
+                            });
+
                             Log.v(TAG, bikeTitle);
                             Log.v(TAG, latitude + " , " + longitude);
                             try {
                                 newStolenBike.save();
+                                Intent in = new Intent(getApplicationContext(), MenuActivity.class);
+                                startActivity(in);
 
                             } catch (ParseException e1) {
                                 e1.printStackTrace();

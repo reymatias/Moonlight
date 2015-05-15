@@ -78,7 +78,7 @@ public class MenuActivity extends ActionBarActivity {
         mProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
