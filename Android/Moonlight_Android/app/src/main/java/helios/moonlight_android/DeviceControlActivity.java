@@ -116,7 +116,7 @@ public class DeviceControlActivity extends Activity {
         mResetConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStringToWrite = "off";
+                mStringToWrite = "on";
                 byte[] mStringByte = mStringToWrite.getBytes();
 
                 mBluetoothLeService.writeCharacteristic_new(mStringByte);
@@ -176,7 +176,7 @@ public class DeviceControlActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.menu_connect:
                 mBluetoothLeService.connect(mDeviceAddress);
                 return true;

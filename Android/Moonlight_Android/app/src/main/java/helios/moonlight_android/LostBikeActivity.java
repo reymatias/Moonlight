@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,14 +44,22 @@ import butterknife.InjectView;
 public class LostBikeActivity extends ActionBarActivity {
 
     final static String TAG = LostBikeActivity.class.getSimpleName();
-    @InjectView(R.id.report_stolen_loc_textView)EditText mReportStolenTextView;
-    @InjectView(R.id.currentLoc_checkbox)CheckBox mCurrentLocCheckBox;
-    @InjectView(R.id.email_checkBox) CheckBox mEmailCheckBox;
-    @InjectView(R.id.phone_checkBox) CheckBox mPhoneCheckBox;
-    @InjectView(R.id.report_button) Button mReportButton;
-    @InjectView(R.id.addressTextView)TextView mAddressTextView;
-    @InjectView(R.id.email_id_textView) TextView mEmailIdTextView;
-    @InjectView(R.id.phone_number_textView) TextView mPhoneNumTextView;
+    @InjectView(R.id.report_stolen_loc_textView)
+    EditText mReportStolenTextView;
+    @InjectView(R.id.currentLoc_checkbox)
+    CheckBox mCurrentLocCheckBox;
+    @InjectView(R.id.email_checkBox)
+    CheckBox mEmailCheckBox;
+    @InjectView(R.id.phone_checkBox)
+    CheckBox mPhoneCheckBox;
+    @InjectView(R.id.report_button)
+    Button mReportButton;
+    @InjectView(R.id.addressTextView)
+    TextView mAddressTextView;
+    @InjectView(R.id.email_id_textView)
+    TextView mEmailIdTextView;
+    @InjectView(R.id.phone_number_textView)
+    TextView mPhoneNumTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +72,13 @@ public class LostBikeActivity extends ActionBarActivity {
         final ParseUser currentUser = ParseUser.getCurrentUser();
 
 
-        String mCurrentUserId = currentUser.getObjectId();
+        final String mCurrentUserId = currentUser.getObjectId();
         //final String[] phone = {currentUser.getString("Phone")};
         //Log.v(TAG, "phone is: " + phone[0]);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
         //Constrain value, i.e. it is equivalent to "WHERE" in SQL
         query.whereEqualTo("OwnerID", mCurrentUserId);
-        Log.v(TAG, "mCurrentuserId: "+ mCurrentUserId);
-
+        Log.v(TAG, "mCurrentuserId: " + mCurrentUserId);
 
 
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -87,9 +93,8 @@ public class LostBikeActivity extends ActionBarActivity {
                     alertDialog.setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                       //CALL PROFILE Page
-//                                    Intent myIntent = new Intent(((Dialog) dialog).getContext(), RegisterActivity.class);
-//                                    startActivity(myIntent);
+                                    Intent myIntent = new Intent(((Dialog) dialog).getContext(), RegisterActivity.class);
+                                    startActivity(myIntent);
                                 }
                             });
                     alertDialog.setNegativeButton("Cancel",
@@ -104,130 +109,148 @@ public class LostBikeActivity extends ActionBarActivity {
                     //Log.v(TAG, "phone is: " + phone[0]);
                     Log.v("score", "Retrieved the object: " + parseObject);
                     Log.v(TAG, "Get status of current bike: " + parseObject.get("Status"));
+                    //parseObject.put("Status", "true");
+                    //shouldn't be done here since user didnt press submit
 
-                    if(parseObject.get("Status").equals("false")) {
-                        parseObject.put("Status", "true");
-
-//                        try {
-//                            parseObject.save();
-//                            mEmailIdTextView.setText(parseObject.get("Email").toString());
-//                            mPhoneNumTextView.setText("");
-//
-//                        } catch (ParseException e1) {
-//                            e1.printStackTrace();
-//                            Log.v(TAG, "Report was not submitted. Please try Again.");
-//                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-//                                    LostBikeActivity.this);
-//                            alertDialog.setTitle("Oops");
-//                            alertDialog.setMessage("Network Error. Please try Again.!");
-//                            alertDialog.setPositiveButton("Ok",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            Intent myIntent = new Intent(((Dialog) dialog).getContext(), LostBikeActivity.class);
-//                                            startActivity(myIntent);
-//                                        }
-//                                    });
-//                            alertDialog.setNegativeButton("Cancel",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            dialog.cancel();
-//                                        }
-//                                    });
-//                            alertDialog.show();
-//                        }
-                        Log.v(TAG, "Get status of current bike after changing: " + parseObject.get("Status"));
+                    try {
+                        parseObject.save();
                         mEmailIdTextView.setText(parseObject.get("Email").toString());
                         mPhoneNumTextView.setText("");
 
-                        mCurrentLocCheckBox.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mCurrentLocCheckBox.isChecked()) {
-                                    getCurrentLocation();
-                                } else {
-                                    mAddressTextView.setText("");
-                                }
-
-                            }
-                        });
-
-                        mReportButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Double latitude = 0.0;
-                                Double longitude = 0.0;
-                                String address = "";
-                                LatLng latLng = null;
-                                //Get data from form and from db to fill Stolen List
-                                String bikeId = parseObject.getString("OwnerID");
-                                String bikeTitle = parseObject.getString("Name");
-
-                                //Check Checkboxes
-                                if (mCurrentLocCheckBox.isChecked()) {
-                                    address = String.valueOf(mAddressTextView.getText());
-                                    Log.v(TAG, "current location address is: " + address);
-                                    latLng = convertAddress(address);
-                                    latitude = latLng.latitude;
-                                    longitude = latLng.longitude;
-
-                                } else {
-                                    //Get address input from user
-                                    address = mReportStolenTextView.getText().toString();
-                                    latLng = convertAddress(address);
-                                    latitude = latLng.latitude;
-                                    longitude = latLng.longitude;
-                                }
-
-                                ParseObject newStolenBike = new ParseObject("StolenList");
-                                newStolenBike.put("BikeId", bikeId);
-                                newStolenBike.put("title", bikeTitle);
-                                newStolenBike.put("latitude", latitude);
-                                newStolenBike.put("longitude", longitude);
-
-                                if (mEmailCheckBox.isChecked()) {
-                                    newStolenBike.put("Email", "true");
-                                }
-
-                                if (mPhoneCheckBox.isChecked()) {
-                                    newStolenBike.put("Phone", "true");
-                                }
-
-                                Log.v(TAG, bikeTitle);
-                                Log.v(TAG, latitude + " , " + longitude);
-                                try {
-                                    parseObject.save();
-                                    newStolenBike.save();
-                                    Toast.makeText(LostBikeActivity.this, "Reported stolen Bike", Toast.LENGTH_LONG).show();
-                                    mReportButton.setEnabled(false);
-
-                                } catch (ParseException e1) {
-                                    e1.printStackTrace();
-                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                                            LostBikeActivity.this);
-                                    alertDialog.setTitle("Oops");
-                                    alertDialog.setMessage("Network Error. Report was not submitted. Please try again!");
-                                    alertDialog.setPositiveButton("Ok",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Intent myIntent = new Intent(((Dialog) dialog).getContext(), LostBikeActivity.class);
-                                                    startActivity(myIntent);
-                                                }
-                                            });
-                                    alertDialog.setNegativeButton("Cancel",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-                                    alertDialog.show();
-                                }
-                            }
-                        });
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                        Log.v(TAG, "Report was not submitted. Please try Again.");
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                                LostBikeActivity.this);
+                        alertDialog.setTitle("Oops");
+                        alertDialog.setMessage("Network Error. Please try Again.!");
+                        alertDialog.setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent myIntent = new Intent(((Dialog) dialog).getContext(), LostBikeActivity.class);
+                                        startActivity(myIntent);
+                                    }
+                                });
+                        alertDialog.setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        alertDialog.show();
                     }
-                    else {
-                        Toast.makeText(LostBikeActivity.this, "You already reported your Stolen Bike", Toast.LENGTH_LONG).show();
-                        mReportButton.setEnabled(false);
-                    }
+                    Log.v(TAG, "Get status of current bike after changing: " + parseObject.get("Status"));
+
+                    mCurrentLocCheckBox.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mCurrentLocCheckBox.isChecked()) {
+                                getCurrentLocation();
+                            } else {
+                                mAddressTextView.setText("");
+                            }
+
+                        }
+                    });
+
+                    mReportButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Double latitude = 0.0;
+                            Double longitude = 0.0;
+                            String address = "";
+                            LatLng latLng = null;
+                            //Get data from form and from db to fill Stolen List
+                            String bikeId = parseObject.getString("OwnerID");
+                            String bikeTitle = parseObject.getString("title");
+
+                            //Check Checkboxes
+                            if (mCurrentLocCheckBox.isChecked()) {
+                                address = String.valueOf(mAddressTextView.getText());
+                                Log.v(TAG, "current location address is: " + address);
+
+                                //Intent needAddress = getIntent();
+                                //needAddress.putExtra("address", address);
+
+                                latLng = convertAddress(address);
+                                latitude = latLng.latitude;
+                                longitude = latLng.longitude;
+
+                            } else {
+                                //Get address input from user
+                                address = mReportStolenTextView.getText().toString();
+                                latLng = convertAddress(address);
+                                latitude = latLng.latitude;
+                                longitude = latLng.longitude;
+                            }
+
+                            ParseObject newStolenBike = new ParseObject("StolenList");
+                            newStolenBike.put("BikeId", bikeId);
+                            newStolenBike.put("title", bikeTitle);
+                            newStolenBike.put("latitude", latitude);
+                            newStolenBike.put("longitude", longitude);
+
+                            if (mEmailCheckBox.isChecked()) {
+                                newStolenBike.put("Email", "true");
+                            }
+
+                            if (mPhoneCheckBox.isChecked()) {
+                                newStolenBike.put("Phone", "true");
+                            }
+
+
+                            ParseQuery<ParseObject> query2 = ParseQuery.getQuery("BikeProfile");
+                            query2.whereEqualTo("OwnerID", mCurrentUserId);
+
+                            final String finalAddress = address;
+
+                            query2.getFirstInBackground(new GetCallback<ParseObject>() {
+                                public void done(ParseObject profile, ParseException e) {
+                                    if (e == null) {
+                                        Log.d("Stolen", "Updating " + profile.getString("Email"));
+                                        profile.put("Status", "true");
+                                        profile.put("Stolen_Address", finalAddress);
+
+                                        profile.saveInBackground();
+                                    } else {
+                                        Log.d("Bike", "FAILED " + profile.getString("BikeId"));
+                                        Log.d("Email", "Error: No bike found on profile list!" + e.getMessage());
+                                    }
+
+                                }
+                            });
+
+                            Log.v(TAG, bikeTitle);
+                            Log.v(TAG, latitude + " , " + longitude);
+                            try {
+                                newStolenBike.save();
+                                Intent in = new Intent(getApplicationContext(), MenuActivity.class);
+                                startActivity(in);
+
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                                        LostBikeActivity.this);
+                                alertDialog.setTitle("Oops");
+                                alertDialog.setMessage("Network Error. Report was not submitted. Please try again!");
+                                alertDialog.setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent myIntent = new Intent(((Dialog) dialog).getContext(), LostBikeActivity.class);
+                                                startActivity(myIntent);
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                alertDialog.show();
+                            }
+                        }
+                    });
+
                 }
             }
         });
@@ -282,7 +305,7 @@ public class LostBikeActivity extends ActionBarActivity {
                 if (addressList != null && addressList.size() > 0) {
                     double lat = addressList.get(0).getLatitude();
                     double lng = addressList.get(0).getLongitude();
-                    Log.v(TAG, "lat: "+lat + " lng: " +lng);
+                    Log.v(TAG, "lat: " + lat + " lng: " + lng);
                     return (new LatLng(lat, lng));
                 }
             } catch (Exception e) {

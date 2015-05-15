@@ -85,19 +85,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onResumeFragments() {
         super.onResumeFragments();
         try {
-                     // check if any view exists on current view
-                     //style = ((Button) findViewById(R.id.xyz_button));
-                 } catch (Exception e) {
-                     // Button was not found
-                     // It means, your button doesn't exist on the "current" view
-                     // It was freed from the memory, therefore stop of activity was performed
-                     // In this case I restart my app
-                     Intent i = new Intent();
-                     i.setClass(getApplicationContext(), MainActivity.class);
-                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                     startActivity(i);
-                     // Show toast to the user
-                     Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
-                 }
+            // check if any view exists on current view
+            //style = ((Button) findViewById(R.id.xyz_button));
+        } catch (Exception e) {
+            // Button was not found
+            // It means, your button doesn't exist on the "current" view
+            // It was freed from the memory, therefore stop of activity was performed
+            // In this case I restart my app
+            Intent i = new Intent();
+            i.setClass(getApplicationContext(), MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            // Show toast to the user
+            Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
+        }
     }
 }

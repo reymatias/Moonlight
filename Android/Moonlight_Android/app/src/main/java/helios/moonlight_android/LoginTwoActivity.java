@@ -250,9 +250,16 @@ public class LoginTwoActivity extends FragmentActivity implements
 //                    mGoogleApiClient.connect();
 //                    break;
                 case R.id.menuButton:
-                    //Display the map with the current location and bikes lost nearby
-                    Intent intent = new Intent(this,MenuActivity.class);
-                    startActivity(intent);
+                    ParseUser user = ParseUser.getCurrentUser();
+                    if (user.getBoolean("FirstTimer")) {
+                        Toast.makeText(LoginTwoActivity.this, "FirstTimer!", Toast.LENGTH_LONG).show();
+                        Intent takeToLogin = new Intent(LoginTwoActivity.this, RegisterActivity.class);
+                        startActivity(takeToLogin);
+                    } else {
+                        //Display the map with the current location and bikes lost nearby
+                        Intent intent = new Intent(this, MenuActivity.class);
+                        startActivity(intent);
+                    }
             }
         }
     }
@@ -296,7 +303,7 @@ public class LoginTwoActivity extends FragmentActivity implements
 
 
         //if(mSignInProgress == STATE_DEFAULT){
-           //navigateToNavDraw();
+        //navigateToNavDraw();
         //}
 
 
@@ -364,19 +371,19 @@ public class LoginTwoActivity extends FragmentActivity implements
                 public void done(ParseUser user, ParseException e) {
                     if (e == null && user != null) {
                         if (user.getBoolean("FirstTimer")) {
-                            user.put("FirstTimer", false);
-                            user.saveInBackground();
+//                            user.put("FirstTimer", false);
+//                            user.saveInBackground();
                             Toast.makeText(LoginTwoActivity.this, "FirstTimer!", Toast.LENGTH_LONG).show();
                             Intent takeToLogin = new Intent(LoginTwoActivity.this, RegisterActivity.class);
                             startActivity(takeToLogin);
-                        }
-                        else {//false
+                        } else {//false
                             Toast.makeText(LoginTwoActivity.this, "NotFirstTimer!", Toast.LENGTH_LONG).show();
-                            //Intent take = new Intent(LoginTwoActivity.this, StolenListActivity.class);
-                            //startActivity(take);
+                            Intent take = new Intent(LoginTwoActivity.this, MenuActivity.class);
+                            startActivity(take);
+                            //this part makes user go to menu activity without pressing continue
+                            //only works after logging in, works as expected
                         }
-                    }
-                    else if (user == null) {
+                    } else if (user == null) {
                         Toast.makeText(LoginTwoActivity.this, "Please try login again!!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(LoginTwoActivity.this, "somethingWentWrong!", Toast.LENGTH_LONG).show();

@@ -1,34 +1,32 @@
 package helios.moonlight_android;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
- import android.content.DialogInterface;
- import android.content.Intent;
- import android.location.Location;
- import android.location.LocationManager;
- import android.net.ConnectivityManager;
- import android.net.NetworkInfo;
-import android.nfc.Tag;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
- import android.os.Message;
- import android.provider.Settings;
- import android.os.Bundle;
- import android.support.v7.app.ActionBarActivity;
- import android.util.Log;
- import android.view.View;
- import android.widget.Button;
- import android.widget.ImageView;
- import android.widget.ProgressBar;
- import android.widget.TextView;
- import android.widget.Toast;
+import android.os.Message;
+import android.provider.Settings;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
- import com.google.android.gms.maps.CameraUpdateFactory;
- import com.google.android.gms.maps.GoogleMap;
- import com.google.android.gms.maps.SupportMapFragment;
- import com.google.android.gms.maps.model.LatLng;
- import com.google.android.gms.maps.model.Marker;
- import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -36,23 +34,23 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.squareup.okhttp.Call;
- import com.squareup.okhttp.Callback;
- import com.squareup.okhttp.OkHttpClient;
- import com.squareup.okhttp.Request;
- import com.squareup.okhttp.Response;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
- import org.json.JSONArray;
- import org.json.JSONException;
- import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
- import java.io.IOException;
- import java.util.ArrayList;
- import java.util.HashMap;
- import java.util.List;
- import java.util.Vector;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
 
- import butterknife.ButterKnife;
- import butterknife.InjectView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /*
   * Created by Roshini on 4/15/2015
@@ -60,59 +58,61 @@ import com.squareup.okhttp.Call;
 
 public class MapsActivity extends ActionBarActivity {
 
-     public static final String TAG = MapsActivity.class.getSimpleName();
+    public static final String TAG = MapsActivity.class.getSimpleName();
 
-     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
-     private AppLocationService appLocationService;
+    private AppLocationService appLocationService;
 
-     List<Marker> mMarkers = new ArrayList<Marker>();
-     HashMap<String, LatLng> mLostBikeMap = new HashMap<>();
-     Vector<LatLng> lostBikeVector = new Vector<>();
-     Vector<lostBikeLatLng> mLostBikeVector= new Vector<lostBikeLatLng>();
-     Vector<String> mLostBikeIdVector = new Vector<>();
-     JSONArray mJsonBikes = null;
-     LocationAddress locationAddress = new LocationAddress();
-
-
-
-     //@InjectView(R.id.btnGPSShowLocation)Button mShowGPSLocationButton;
-     //@InjectView(R.id.btnShowAddress)Button mShowAddressButton;
-     @InjectView(R.id.addressTextView)TextView mAddressTextView;
-     @InjectView(R.id.refreshImageViewMaps)ImageView mRefreshImageViewMaps;
-     @InjectView(R.id.progressBarMaps)ProgressBar mProgressBarMaps;
+    List<Marker> mMarkers = new ArrayList<Marker>();
+    HashMap<String, LatLng> mLostBikeMap = new HashMap<>();
+    Vector<LatLng> lostBikeVector = new Vector<>();
+    Vector<lostBikeLatLng> mLostBikeVector = new Vector<lostBikeLatLng>();
+    Vector<String> mLostBikeIdVector = new Vector<>();
+    JSONArray mJsonBikes = null;
+    LocationAddress locationAddress = new LocationAddress();
 
 
-     protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_maps);
-         ButterKnife.inject(this);
+    //@InjectView(R.id.btnGPSShowLocation)Button mShowGPSLocationButton;
+    //@InjectView(R.id.btnShowAddress)Button mShowAddressButton;
+    @InjectView(R.id.addressTextView)
+    TextView mAddressTextView;
+    @InjectView(R.id.refreshImageViewMaps)
+    ImageView mRefreshImageViewMaps;
+    @InjectView(R.id.progressBarMaps)
+    ProgressBar mProgressBarMaps;
 
-         setUpMapIfNeeded();
-         Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
 
-         mProgressBarMaps.setVisibility(View.INVISIBLE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        ButterKnife.inject(this);
+
+        setUpMapIfNeeded();
+        Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
+
+        mProgressBarMaps.setVisibility(View.INVISIBLE);
 
 
-         mRefreshImageViewMaps.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Log.d(TAG, "clear and retrieve!");
-                 //mlist_item.setAdapter(null);
-                 mMarkers.clear();
-                 mLostBikeMap.clear();
-                 mLostBikeIdVector.clear();
-                 mMap.clear();
+        mRefreshImageViewMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "clear and retrieve!");
+                //mlist_item.setAdapter(null);
+                mMarkers.clear();
+                mLostBikeMap.clear();
+                mLostBikeIdVector.clear();
+                mMap.clear();
 
-                 appLocationService = new AppLocationService(MapsActivity.this);
-                 Location location = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+                appLocationService = new AppLocationService(MapsActivity.this);
+                Location location = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
 
-                 if (location != null) {
-                     final double currentLatitude = location.getLatitude();
-                     final double currentLongitude = location.getLongitude();
-                     LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+                if (location != null) {
+                    final double currentLatitude = location.getLatitude();
+                    final double currentLongitude = location.getLongitude();
+                    LatLng latLng = new LatLng(currentLatitude, currentLongitude);
                      /*Collects data from Bike Index*/
-                     getIdList(latLng);
+                    getIdList(latLng);
                      /*Collect Data from parse and display*/
 
                      final LocationAddress locationAddress = new LocationAddress();
@@ -272,31 +272,31 @@ public class MapsActivity extends ActionBarActivity {
 //             }
 //         });
 
-     }///
+    }///
 
-     private void getIdList(LatLng latLng) {
-         //Actual code
-         String lat = latLng.latitude + "";
-         String lng = latLng.longitude + "";
+    private void getIdList(LatLng latLng) {
+        //Actual code
+        String lat = latLng.latitude + "";
+        String lng = latLng.longitude + "";
 
 
-         //For testing purposes on emulator
-         //String lat = "37.3000";
-         //String lng = "-120.4833";
+        //For testing purposes on emulator
+        //String lat = "37.3000";
+        //String lng = "-120.4833";
 
-         String proximity = "1";
-         String latLongURL = "https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity="
-                 +lat+ "%2C" + lng +
-                 "&proximity_square="
-                 +proximity+ "&access_token=0824a7ad26ac4576f365caa9d0587155a99f4b464ae98cc5c64d01cbad7be49a";
+        String proximity = "1";
+        String latLongURL = "https://bikeindex.org:443/api/v2/bikes_search/stolen?page=1&proximity="
+                + lat + "%2C" + lng +
+                "&proximity_square="
+                + proximity + "&access_token=0824a7ad26ac4576f365caa9d0587155a99f4b464ae98cc5c64d01cbad7be49a";
 
-         //Get Data from Parse
-         Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
-         ParseQuery<ParseObject> query = ParseQuery.getQuery("StolenList");
-         query.getFirstInBackground(new GetCallback<ParseObject>() {
-             @Override
-             public void done(ParseObject parseObject, ParseException e) {
-                 if(e == null){
+        //Get Data from Parse
+        Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("StolenList");
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
                     //Log.e(parseObject.get)
                  }
              }

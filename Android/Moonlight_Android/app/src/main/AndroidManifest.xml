@@ -91,6 +91,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NavDrawActivity" />
         </activity>
+
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_reg"
@@ -99,7 +100,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginTwoActivity" />
         </activity>
-
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MenuActivity" />
+        </activity>
         <activity
             android:name=".StolenListActivity"
             android:label="@string/title_activity_stolen"
@@ -110,7 +118,7 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:label="@string/title_activity_stolen"
+            android:label= "Stolen Bikes Detail"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,11 +1,7 @@
 package helios.moonlight_android;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -23,14 +18,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class RegisterActivity extends ActionBarActivity {
+public class ProfileActivity extends ActionBarActivity {
 
     @InjectView(R.id.profile_name)
     EditText mprofile_name;
@@ -46,19 +37,23 @@ public class RegisterActivity extends ActionBarActivity {
     EditText mprofile_serial;
     @InjectView(R.id.profile_colors)
     EditText mprofile_colors;
-/*    @InjectView(R.id.profile_notes)
-    EditText mprofile_notes;*/
+    /*    @InjectView(R.id.profile_notes)
+        EditText mprofile_notes;*/
     @InjectView(R.id.profile_upload)
     TextView mprofile_upload;
     @InjectView(R.id.profile_submit)
     Button mprofile_submit;
+    @InjectView(R.id.Found)
+    Button mFound;
     @InjectView(R.id.profile_snap)
     ImageButton mprofile_snap;
+
+    String objectID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_profile);
 
         Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
         final ParseUser currentUser = ParseUser.getCurrentUser();
@@ -66,10 +61,17 @@ public class RegisterActivity extends ActionBarActivity {
 
         ButterKnife.inject(this);
 
+
         final String email = currentUser.getEmail();
         final String relationID = currentUser.getObjectId();
         mprofile_email.setText(email);
         mprofile_name.setHint("Name of BIKE");
+
+/*        The three special values have their own accessors:
+
+        String objectId = gameScore.getObjectId();
+        Date updatedAt = gameScore.getUpdatedAt();
+        Date createdAt = gameScore.getCreatedAt();*/
 
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
@@ -79,7 +81,10 @@ public class RegisterActivity extends ActionBarActivity {
                 if (e == null) {
                     Log.d("Email", "Retrieved " + profile.getString("Email"));
                     //String name = result.getString("Name");
-
+                    //objectID = profile.getObjectId();
+                    objectID = profile.getString("OwnerID");
+                    // sigh, a different accessed method
+                    Log.d("objectId", "Retrieved " + objectID);
                     mprofile_name.setText(profile.getString("title"));
                     mprofile_make.setText(profile.getString("manufacturer_name"));
                     mprofile_model.setText(profile.getString("frame_model"));
@@ -100,6 +105,52 @@ public class RegisterActivity extends ActionBarActivity {
             }
         });
 
+        //Luis will it be possible for u to include a button that says Found on profile page?
+        // If clicked, remove bike from StolenList
+        // and change Status of bike from true to false
+        mFound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("StolenList");
+                query.whereEqualTo("BikeId", objectID);
+                query.getFirstInBackground(new GetCallback<ParseObject>() {
+                    public void done(ParseObject bike, ParseException e) {
+                        if (e == null) {
+                            Log.d("Bike", "Retrieved " + bike.getString("BikeId"));
+                            //String name = result.getString("Name");
+                            bike.deleteInBackground();
+                        } else {
+                            Log.d("Bike", "FAILED " + bike.getString("BikeId"));
+                            Log.d("Email", "Error: No bike found on stolen list!" + e.getMessage());
+                        }
+                    }
+                });
+
+                ParseQuery<ParseObject> query2 = ParseQuery.getQuery("BikeProfile");
+                query2.whereEqualTo("Email", email);
+                query2.getFirstInBackground(new GetCallback<ParseObject>() {
+                    public void done(ParseObject profile, ParseException e) {
+                        if (e == null) {
+                            Log.d("Not Stolen Anymore", "Updating " + profile.getString("Email"));
+                            profile.put("Status", "false");
+                            profile.put("Stolen_Address", "");
+
+                            profile.saveInBackground();
+                            Toast.makeText(getApplicationContext(), "Recovered!", Toast.LENGTH_LONG).show();
+
+                        } else {
+                            Log.d("Bike", "FAILED " + profile.getString("BikeId"));
+                            Log.d("Email", "Error: No bike found on profile list!" + e.getMessage());
+                        }
+
+                    }
+                });
+
+
+            }
+        });
+
         //mprofile_submit.setOnClickListener(this);
         mprofile_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,10 +164,9 @@ public class RegisterActivity extends ActionBarActivity {
                 final String colors = mprofile_colors.getText().toString().trim();
 //                final String notes = mprofile_notes.getText().toString().trim();
 
-                if(name.length() == 0 || make.length() == 0 || model.length() == 0 || year.length() == 0 || serial.length() == 0 || colors.length() == 0 ){
-                    Toast.makeText(RegisterActivity.this, "Please fill in all fields!!", Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (name.length() == 0 || make.length() == 0 || model.length() == 0 || year.length() == 0 || serial.length() == 0 || colors.length() == 0) {
+                    Toast.makeText(ProfileActivity.this, "Please fill in all fields!!", Toast.LENGTH_LONG).show();
+                } else {
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("BikeProfile");
                     query.whereEqualTo("Email", email);
                     query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -158,7 +208,7 @@ public class RegisterActivity extends ActionBarActivity {
                     currentUser.put("FirstTimer", false);
                     currentUser.saveInBackground();
 
-                    Toast.makeText(RegisterActivity.this, "SAVED!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, "SAVED!", Toast.LENGTH_LONG).show();
                     Intent in = new Intent(getApplicationContext(), MenuActivity.class);
                     startActivity(in);
                 }

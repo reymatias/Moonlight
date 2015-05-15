@@ -53,7 +53,7 @@ public class NavDrawActivity extends ActionBarActivity
         Fragment fragment;
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch(position) {
+        switch (position) {
             default:
             case 0:
                 Intent bluetooth = new Intent(this, DeviceControlActivity.class);
@@ -78,7 +78,7 @@ public class NavDrawActivity extends ActionBarActivity
                 startActivity(intent);
                 break;
             case 4:
-                Intent reportStolen = new Intent(this,LostBikeActivity.class);
+                Intent reportStolen = new Intent(this, LostBikeActivity.class);
                 startActivity(reportStolen);
                 break;
             case 5:
