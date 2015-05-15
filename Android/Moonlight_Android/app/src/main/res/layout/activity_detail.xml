@@ -16,7 +16,8 @@
             android:orientation="vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_margin="15dp">
+            android:layout_margin="15dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -26,7 +27,10 @@
                 android:text="Title"
                 android:id="@+id/Title"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:layout_marginTop="0dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +38,9 @@
                 android:layout_weight="1"
                 android:text="ID"
                 android:id="@+id/ID"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright"
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,7 +56,8 @@
                 android:layout_weight="1"
                 android:text="Manufacturer"
                 android:id="@+id/Manufacturer"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,7 +73,8 @@
                 android:layout_weight="1"
                 android:text="Year"
                 android:id="@+id/Year"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +90,8 @@
                 android:layout_weight="1"
                 android:text="Frame Material"
                 android:id="@+id/Frame_Material"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,7 +108,8 @@
                 android:layout_weight="1"
                 android:text="Primary colors"
                 android:id="@+id/Primary_colors"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +125,8 @@
                 android:layout_weight="1"
                 android:text="Location"
                 android:id="@+id/Location"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -139,7 +150,8 @@
                 android:layout_weight="1"
                 android:text="Date stolen"
                 android:id="@+id/Date_stolen"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -155,7 +167,8 @@
                 android:layout_weight="1"
                 android:text="Police report #"
                 android:id="@+id/Police_report"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:textColor="@android:color/holo_blue_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -163,7 +176,8 @@
                 android:layout_weight="1"
                 android:text="Department &amp; city"
                 android:id="@+id/Department_city"
-                android:layout_height="0dp" />
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dp" />
 
             <ImageView
                 android:layout_marginTop="10dp"

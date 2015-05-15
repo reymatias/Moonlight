@@ -51,10 +51,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/profile_btn"
         android:src="@drawable/ic_person_white_48dp"
-        android:layout_below="@+id/favorites_btn"
-        android:layout_alignStart="@+id/favorites_btn"
-        android:layout_marginTop="62dp"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -62,18 +62,9 @@
         android:id="@+id/report_btn"
         android:src="@drawable/ic_warning_amber_48dp"
         android:layout_marginLeft="40dp"
-        android:layout_below="@+id/profile_btn"
-        android:layout_toStartOf="@+id/profile_btn"
-        android:layout_marginTop="32dp"
-        android:adjustViewBounds="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/return_btn"
-        android:src="@drawable/ic_arrow_back_white_48dp"
-        android:layout_alignTop="@+id/report_btn"
-        android:layout_toEndOf="@+id/profile_btn"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="33dp"
+        android:layout_above="@+id/profile_btn"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

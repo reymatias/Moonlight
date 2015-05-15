@@ -32,18 +32,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
-
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            Toast.makeText(MainActivity.this, "YOU ARE LOGGED IN!", Toast.LENGTH_SHORT).show();
-            // do stuff with the user
-        } else {
-            Intent intent = new Intent(this, LoginTwoActivity.class);
-            startActivity(intent);
-            Toast.makeText(MainActivity.this, "Please Login!", Toast.LENGTH_SHORT).show();
-            // show the signup or login screen
-        }
+//        Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
+//
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        if (currentUser != null) {
+//            Toast.makeText(MainActivity.this, "YOU ARE LOGGED IN!", Toast.LENGTH_SHORT).show();
+//            // do stuff with the user
+//        } else {
+//            Intent intent = new Intent(this, LoginTwoActivity.class);
+//            startActivity(intent);
+//            Toast.makeText(MainActivity.this, "Please Login!", Toast.LENGTH_SHORT).show();
+//            // show the signup or login screen
+//        }
     }
 
     @Override

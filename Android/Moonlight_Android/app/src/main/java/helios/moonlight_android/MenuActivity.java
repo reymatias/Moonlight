@@ -20,7 +20,7 @@ public class MenuActivity extends ActionBarActivity {
     @InjectView(R.id.maps_btn)ImageButton mMapsBtn;
     @InjectView(R.id.report_btn)ImageButton mReportBtn;
     @InjectView(R.id.profile_btn)ImageButton mProfileBtn;
-    @InjectView(R.id.return_btn)ImageButton mReturnBtn;
+    //@InjectView(R.id.return_btn)ImageButton mReturnBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,13 +75,6 @@ public class MenuActivity extends ActionBarActivity {
             }
         });
 
-        mReturnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, LoginTwoActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
 

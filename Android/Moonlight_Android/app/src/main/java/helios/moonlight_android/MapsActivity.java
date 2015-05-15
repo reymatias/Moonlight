@@ -143,7 +143,7 @@ public class MapsActivity extends ActionBarActivity {
                      mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                      mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 6));
 
-                     //Get Data from Parse
+                     /*********Get Data from Parse*********/
                      ParseQuery<ParseObject> query = ParseQuery.getQuery("StolenList");
                      Log.v(TAG, "Query returns: "+ query);
                      query.findInBackground(new FindCallback<ParseObject>() {
@@ -430,6 +430,7 @@ public class MapsActivity extends ActionBarActivity {
                      LatLng latLng = new LatLng(latitude, longitude);
                      String bikeId = "";
                      String bikeTitle = "";
+                     String thumbStr = "";
                      try {
                          //Get string of JSON
                          if (response.isSuccessful()) {
@@ -447,6 +448,11 @@ public class MapsActivity extends ActionBarActivity {
                              Log.i(TAG, "From JSON: " + bikeId);
                              bikeTitle = bikeDetailsJSON.getString("title");
                              Log.i(TAG, "From JSON: " + bikeTitle);
+
+                             //ThumbImage
+                             thumbStr = bikeDetailsJSON.getString("thumb");
+                             Log.i(TAG, "Bike image: " + thumbStr);
+
                              String bikeStolenRecord = bikeDetailsJSON.getString("stolen_record");
                              Log.i(TAG, "From JSON: " + bikeStolenRecord);
 
@@ -475,6 +481,7 @@ public class MapsActivity extends ActionBarActivity {
                                      Marker marker = mMap.addMarker(new MarkerOptions()
                                        .position(finalLatLng)
                                        .title(finalBikeTitle + ", " + finalBikeId)
+                                       //.
                                      );
                                      mMarkers.add(marker);
                                      Log.v(TAG,"Markers size(should increase): " + mMarkers.size());
