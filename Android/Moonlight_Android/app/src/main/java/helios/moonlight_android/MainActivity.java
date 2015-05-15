@@ -1,5 +1,6 @@
 package helios.moonlight_android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.parse.ParseUser;
 import com.parse.ParseObject;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     private SignInButton mSignInButton;
 
@@ -81,23 +82,23 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
-        try {
-            // check if any view exists on current view
-            //style = ((Button) findViewById(R.id.xyz_button));
-        } catch (Exception e) {
-            // Button was not found
-            // It means, your button doesn't exist on the "current" view
-            // It was freed from the memory, therefore stop of activity was performed
-            // In this case I restart my app
-            Intent i = new Intent();
-            i.setClass(getApplicationContext(), MainActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            // Show toast to the user
-            Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
-        }
-    }
+//    @Override
+//    protected void onResumeFragments() {
+//        super.onResume();
+//        try {
+//            // check if any view exists on current view
+//            //style = ((Button) findViewById(R.id.xyz_button));
+//        } catch (Exception e) {
+//            // Button was not found
+//            // It means, your button doesn't exist on the "current" view
+//            // It was freed from the memory, therefore stop of activity was performed
+//            // In this case I restart my app
+//            Intent i = new Intent();
+//            i.setClass(getApplicationContext(), MainActivity.class);
+//            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(i);
+//            // Show toast to the user
+//            Toast.makeText(getApplicationContext(), "Data lost due to excess use of other apps", Toast.LENGTH_LONG).show();
+//        }
+//    }
 }

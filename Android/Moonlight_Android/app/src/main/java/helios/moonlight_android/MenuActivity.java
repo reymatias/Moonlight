@@ -15,7 +15,7 @@ import butterknife.InjectView;
 public class MenuActivity extends ActionBarActivity {
     @InjectView(R.id.bluetooth_btn)ImageButton mBluetoothBtn;
     @InjectView(R.id.search_btn)ImageButton mSearchBtn;
-    @InjectView(R.id.favorites_btn)ImageButton mFavoritesBtn;
+    //@InjectView(R.id.favorites_btn)ImageButton mFavoritesBtn;
     @InjectView(R.id.maps_btn)ImageButton mMapsBtn;
     @InjectView(R.id.report_btn)ImageButton mReportBtn;
     @InjectView(R.id.profile_btn)ImageButton mProfileBtn;
@@ -43,13 +43,13 @@ public class MenuActivity extends ActionBarActivity {
             }
         });
 
-        mFavoritesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(MenuActivity.this, StolenListActivity.class);
-                //startActivity(intent);
-            }
-        });
+//        mFavoritesBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Intent intent = new Intent(MenuActivity.this, StolenListActivity.class);
+//                //startActivity(intent);
+//            }
+//        });
 
         mMapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

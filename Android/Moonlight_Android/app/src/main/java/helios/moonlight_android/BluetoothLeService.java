@@ -158,6 +158,13 @@ public class BluetoothLeService extends Service {
             if (mBLEServiceCb != null) {
                 mBLEServiceCb.displayRssi(rssi);
             }
+
+            if(rssi <= -90 && mLargeDistance == false) {
+                mLargeDistance = true;
+                mStringToWrite = "on";
+                byte[] mStringByte = mStringToWrite.getBytes();
+                writeCharacteristic_new(mStringByte);
+            }
         }
     };
 

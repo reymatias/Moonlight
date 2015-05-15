@@ -39,14 +39,14 @@ public class ProfileActivity extends ActionBarActivity {
     EditText mprofile_colors;
     /*    @InjectView(R.id.profile_notes)
         EditText mprofile_notes;*/
-    @InjectView(R.id.profile_upload)
-    TextView mprofile_upload;
+//    @InjectView(R.id.profile_upload)
+//    TextView mprofile_upload;
     @InjectView(R.id.profile_submit)
     Button mprofile_submit;
     @InjectView(R.id.Found)
     Button mFound;
-    @InjectView(R.id.profile_snap)
-    ImageButton mprofile_snap;
+//    @InjectView(R.id.profile_snap)
+//    ImageButton mprofile_snap;
 
     String objectID;
 
@@ -98,12 +98,12 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
 
-        mprofile_snap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // picture taking
-            }
-        });
+//        mprofile_snap.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // picture taking
+//            }
+//        });
 
         //Luis will it be possible for u to include a button that says Found on profile page?
         // If clicked, remove bike from StolenList

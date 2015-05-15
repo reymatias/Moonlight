@@ -48,12 +48,12 @@ public class RegisterActivity extends ActionBarActivity {
     EditText mprofile_colors;
 /*    @InjectView(R.id.profile_notes)
     EditText mprofile_notes;*/
-    @InjectView(R.id.profile_upload)
-    TextView mprofile_upload;
+//    @InjectView(R.id.profile_upload)
+//    TextView mprofile_upload;
     @InjectView(R.id.profile_submit)
     Button mprofile_submit;
-    @InjectView(R.id.profile_snap)
-    ImageButton mprofile_snap;
+    //@InjectView(R.id.profile_snap)
+    //ImageButton mprofile_snap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +93,12 @@ public class RegisterActivity extends ActionBarActivity {
             }
         });
 
-        mprofile_snap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // picture taking
-            }
-        });
+//        mprofile_snap.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // picture taking
+//            }
+//        });
 
         //mprofile_submit.setOnClickListener(this);
         mprofile_submit.setOnClickListener(new View.OnClickListener() {

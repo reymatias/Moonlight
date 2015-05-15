@@ -250,6 +250,7 @@ public class LoginTwoActivity extends FragmentActivity implements
 //                    mGoogleApiClient.connect();
 //                    break;
                 case R.id.menuButton:
+                    Parse.initialize(this, "Un6I0fGo4poWYSEsg4muV3G09C7OzNafBv7F2GIi", "AbitumkApEu1nmH6EXNkPe2r2D8khB7wFU5hHi7i");
                     ParseUser user = ParseUser.getCurrentUser();
                     if (user.getBoolean("FirstTimer")) {
                         Toast.makeText(LoginTwoActivity.this, "FirstTimer!", Toast.LENGTH_LONG).show();

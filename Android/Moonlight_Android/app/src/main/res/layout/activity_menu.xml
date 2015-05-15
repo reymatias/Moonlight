@@ -12,9 +12,9 @@
         android:id="@+id/bluetooth_btn"
         android:src="@drawable/ic_bluetooth_connected_white_48dp"
         android:adjustViewBounds="true"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/favorites_btn"
-        android:layout_marginTop="31dp" />
+        android:layout_alignStart="@+id/report_btn" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -27,14 +27,14 @@
         android:layout_marginLeft="10dp"
         android:adjustViewBounds="true" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/favorites_btn"
-        android:layout_alignTop="@+id/search_btn"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_star_white_48dp"
-        android:adjustViewBounds="true" />
+    <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/favorites_btn"-->
+        <!--android:layout_alignTop="@+id/search_btn"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:src="@drawable/ic_star_white_48dp"-->
+        <!--android:adjustViewBounds="true" />-->
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -52,9 +52,9 @@
         android:id="@+id/profile_btn"
         android:src="@drawable/ic_person_white_48dp"
         android:adjustViewBounds="true"
+        android:layout_marginBottom="44dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp" />
+        android:layout_alignStart="@+id/report_btn" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -63,8 +63,8 @@
         android:src="@drawable/ic_warning_amber_48dp"
         android:layout_marginLeft="40dp"
         android:adjustViewBounds="true"
-        android:layout_marginBottom="33dp"
-        android:layout_above="@+id/profile_btn"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/search_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
 
 </RelativeLayout>
