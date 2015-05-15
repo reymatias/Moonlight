@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DeviceControlActivity extends ActionBarActivity {
+public class DeviceControlActivity extends Activity {
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
 
@@ -94,9 +94,9 @@ public class DeviceControlActivity extends ActionBarActivity {
         mTheftOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStringToWrite = "off";
+                mStringToWrite = "on";
                 byte[] mStringByte = mStringToWrite.getBytes();
-
+                //Log.v("TAG", "mStringByte is: "+ mStringByte);
                 mBluetoothLeService.writeCharacteristic_new(mStringByte);
             }
         });
@@ -105,7 +105,7 @@ public class DeviceControlActivity extends ActionBarActivity {
         mTheftOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStringToWrite = "on";
+                mStringToWrite = "off";
                 byte[] mStringByte = mStringToWrite.getBytes();
 
                 mBluetoothLeService.writeCharacteristic_new(mStringByte);
