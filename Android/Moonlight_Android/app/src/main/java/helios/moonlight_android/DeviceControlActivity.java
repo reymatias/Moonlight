@@ -94,7 +94,7 @@ public class DeviceControlActivity extends ActionBarActivity {
         mTheftOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStringToWrite = "off";
+                mStringToWrite = "on";
                 byte[] mStringByte = mStringToWrite.getBytes();
 
                 mBluetoothLeService.writeCharacteristic_new(mStringByte);
@@ -105,7 +105,7 @@ public class DeviceControlActivity extends ActionBarActivity {
         mTheftOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStringToWrite = "on";
+                mStringToWrite = "off";
                 byte[] mStringByte = mStringToWrite.getBytes();
 
                 mBluetoothLeService.writeCharacteristic_new(mStringByte);
@@ -116,7 +116,7 @@ public class DeviceControlActivity extends ActionBarActivity {
         mResetConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mStringToWrite = "off";
+                mStringToWrite = "on";
                 byte[] mStringByte = mStringToWrite.getBytes();
 
                 mBluetoothLeService.writeCharacteristic_new(mStringByte);
